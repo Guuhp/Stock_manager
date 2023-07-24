@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusDeposit {
+  EMPTY
+  FULL
+  REPLACEMENT
+}
+
+model Person {
+  id String @id @default(uuid())
+
+  name       String
+  date_birth DateTime?
+  telephone  String
+  address    String
+
+  Employee Employee?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("persons")
+}
+
+model Employee {
+  id String @id @default(uuid())
+
+  registration Int    @unique
+  office       String
+  personId     String @unique
+
+  person Person @relation(fields: [personId], references: [id])
+  User   User?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("employees")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email      String @unique
+  password   String
+  employeeId String @unique
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  warehouses AssociateUserWarehouse[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Warehouse {
+  id String @id @default(uuid())
+
+  name      String
+  code      Int    @unique
+  telephone String
+
+  users   AssociateUserWarehouse[]
+  Deposit Deposit[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("warehouses")
+}
+
+model AssociateUserWarehouse {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId String
+
+  @@map("associate_user_wharehouse")
+}
+
+model Deposit {
+  id String @id @default(uuid())
+
+  name              String
+  initial_inventory Int
+  current_inventory Int
+
+  warehouseId String
+  warehouse   Warehouse     @relation(fields: [warehouseId], references: [id])
+  status      StatusDeposit @default(EMPTY)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Product    Product[]
+
+  @@map("deposits")
+}
+
+//PRODUTO
+model Product {
+  id String @id @default(uuid())
+
+  name                String
+  unit_of_measurement String
+  description         String
+  price               Float
+
+  deposit   Deposit @relation(fields: [depositId], references: [id])
+  depositId String
+
+  category          CategoryProduct   @relation(fields: [categoryProductId], references: [id])
+  categoryProductId String
+  ProductSupplier   AssociateProductSupplier[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Supplier {
+  id String @id @default(uuid())
+
+  name      String
+  email     String @unique
+  telephone String
+  address   String
+
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  ProductSupplier AssociateProductSupplier[]
+
+  @@map("suppliers")
+}
+
+model AssociateProductSupplier {
+  id String @id @default(uuid())
+
+  productId String
+  products  Product @relation(fields: [productId], references: [id])
+
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+
+  @@map("associate_product_supplier")
+}
+
+model CategoryProduct {
+  id String @id @default(uuid())
+
+  name        String
+  description String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Products   Product[]
+  @@map("category_products")
+}
