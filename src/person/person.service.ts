@@ -12,11 +12,16 @@ export class PersonService {
 
 
   create(data: CreatePersonDto) {
-    return this.prisma.person.create({data});
+    return this.prisma.person.create({
+      data:{
+        ...data,
+        date_birth:new Date(data.date_birth)
+      }
+    });
   }
 
   findAll() {
-    return this.prisma.person.findMany();
+    return this.prisma.person.findMany()
   }
 
 

@@ -16,6 +16,11 @@ enum StatusDeposit {
   REPLACEMENT
 }
 
+enum StatusAccount {
+  ACTIVE
+  INATIVE
+}
+
 model Person {
   id String @id @default(uuid())
 
@@ -54,6 +59,8 @@ model User {
   email      String @unique
   password   String
   employeeId String @unique
+
+  statusAccount StatusAccount @default(ACTIVE)
 
   employee Employee @relation(fields: [employeeId], references: [id])
 
@@ -123,7 +130,7 @@ model Product {
   deposit   Deposit @relation(fields: [depositId], references: [id])
   depositId String
 
-  category          CategoryProduct   @relation(fields: [categoryProductId], references: [id])
+  category          CategoryProduct            @relation(fields: [categoryProductId], references: [id])
   categoryProductId String
   ProductSupplier   AssociateProductSupplier[]
 
@@ -141,8 +148,8 @@ model Supplier {
   telephone String
   address   String
 
-  created_at      DateTime          @default(now())
-  updated_at      DateTime          @updatedAt
+  created_at      DateTime                   @default(now())
+  updated_at      DateTime                   @updatedAt
   ProductSupplier AssociateProductSupplier[]
 
   @@map("suppliers")
@@ -169,5 +176,6 @@ model CategoryProduct {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   Products   Product[]
+
   @@map("category_products")
 }

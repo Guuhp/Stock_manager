@@ -1,1 +1,15 @@
-export class CreateUserDto {}
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+
+export class CreateUserDto {
+  @IsEmail()
+  email: string;
+
+  //@IsStrongPassword()
+  @IsNotEmpty()
+  @MinLength(6, { message: 'Senha muito curta' })
+  password: string;
+
+  @IsString()
+  employeeId: string;
+
+}
