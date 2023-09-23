@@ -5,7 +5,7 @@ export class CreateUserDto {
   email: string;
 
   //@IsStrongPassword()
-  @IsNotEmpty()
+  @IsString()
   @MinLength(6, { message: 'Senha muito curta' })
   password: string;
 

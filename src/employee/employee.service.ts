@@ -16,7 +16,7 @@ export class EmployeeService {
 
   findAll() {
     return this.prisma.employee.findMany({
-      //include:{person:true}
+      include:{person:true}
     });
   }
 

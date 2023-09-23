@@ -7,12 +7,12 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Post('create')
+  @Post()
   create(@Body() data: CreatePersonDto) {
     return this.personService.create(data);
   }
 
-  @Get('list')
+  @Get()
   findAll() {
     return this.personService.findAll();
   }
