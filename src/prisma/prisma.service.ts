@@ -7,6 +7,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     super({
       log: ['query'],
     });
+  
   }
 
   async onModuleInit() {
