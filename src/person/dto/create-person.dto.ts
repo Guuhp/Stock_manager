@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsOptional, IsString, isString } from 'class-validator';
+import { IsCPF } from 'class-validator-cpf';
 
 export class CreatePersonDto {
     @ApiProperty()
@@ -13,6 +14,10 @@ export class CreatePersonDto {
     
     @ApiProperty()
     telephone: string;
+
+    @ApiProperty()
+    @IsCPF({message:"CPF is format invalid"})
+    cpf:string;
  
     @ApiProperty()
     address: string;

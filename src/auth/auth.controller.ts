@@ -3,7 +3,6 @@ import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
 import { AuthResetDTO } from "./dto/auth.reset.dto";
-import { UsersService } from "src/users/users.service";
 import { AuthService } from "./auth.service";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -23,7 +22,7 @@ export class AuthController {
 
     @Post('register')
     async register(@Body() body: AuthRegisterDTO) {
-        this.authService.register(body)
+      return this.authService.register(body);
     }
 
     @Post('forget')

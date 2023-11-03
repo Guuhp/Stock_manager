@@ -9,14 +9,16 @@ import { ApiTags } from '@nestjs/swagger';
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
+  @Get()
+  findAll() {
+    return this.employeeService.findAll();
+  }
+
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.create(createEmployeeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.employeeService.findAll();
-  }
+
 
 }

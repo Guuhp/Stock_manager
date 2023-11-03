@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "src/prisma/prisma.service";
 import * as bcrypt from 'bcrypt';
-import { Prisma, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { UsersService } from "src/users/users.service";
 
@@ -17,9 +17,9 @@ export class AuthService {
 
     async createToken(user: User) {
         return {
-            acessToken: this.jwtService.sign({
+            acessToken: await this.jwtService.sign({
                 //a que pertence o token
-                sub: user.id,
+                sub: user?.id,
                 email: user.email
             }, {
                 expiresIn: '7 days',
@@ -34,6 +34,7 @@ export class AuthService {
             const data = this.jwtService.verify(token, {
                 audience: "users"
             })
+            console.log(data)
             return data
         } catch(e) {
             throw new BadRequestException(e)
@@ -46,7 +47,6 @@ export class AuthService {
                 email,
             },
         });
-        console.log(user);
 
         if (!user) {
             throw new UnauthorizedException(
@@ -81,7 +81,9 @@ export class AuthService {
         //VALIDAR O TOKEN 
         //ATUALIZAR O PASSWORD
         //extrair o ID do token
-        const id = "00000"
+        const id = "3e705d79-617d-44da-ac6a-247360a7f46a"
+        const salt = await bcrypt.genSalt();
+        password = await bcrypt.hash(password, salt);
         const user = await this.prisma.user.update({
             where: {
                 id
@@ -94,7 +96,8 @@ export class AuthService {
     }
 
     async register(data: AuthRegisterDTO) {
-        const user = await this.userService.create(data)
-        return this.createToken(user)
-    }
+        const user = await this.userService.create(data);
+        return this.createToken(user);
+      }
+      
 }

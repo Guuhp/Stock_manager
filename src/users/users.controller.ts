@@ -9,7 +9,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+/*   @Get()
   @ApiOperation({ summary: 'get all users', description: 'Returns all users.' })
   findAll() {
     return this.usersService.findAll();
@@ -18,15 +18,7 @@ export class UsersController {
   @Get('findEmail/:id')
   findByEmail(@Param('email') email: string) {
     return this.usersService.findByEmail(email);
-  }
+  } */
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
-  
-
-  
 
 }

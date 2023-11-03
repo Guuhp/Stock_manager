@@ -25,6 +25,7 @@ model Person {
   id String @id @default(uuid())
 
   name       String
+  cpf        String
   date_birth DateTime?
   telephone  String
   address    String
