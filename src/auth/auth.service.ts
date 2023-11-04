@@ -27,6 +27,7 @@ export class AuthService {
           //a que pertence o token
           sub: user?.id,
           email: user.email,
+          id: user?.id,
         },
         {
           expiresIn: '7 days',
@@ -42,8 +43,8 @@ export class AuthService {
       const data = this.jwtService.verify(token, {
         audience: 'users',
       });
-      console.log(data);
       return data;
+
     } catch (e) {
       throw new BadRequestException(e);
     }
@@ -79,29 +80,27 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('incorrect email.');
     }
-    const token = await this.createToken(user)
-  
-    await this.email.sendEmail(user.email, token.acessToken)
+    const token = await this.createToken(user);
+
+    await this.email.sendEmail(user.email, token.acessToken);
     return true;
   }
 
   async reset(password: string, token: string) {
-    //TODO
-    //VALIDAR O TOKEN
-    //ATUALIZAR O PASSWORD
-    //extrair o ID do token
-    const id = '3e705d79-617d-44da-ac6a-247360a7f46a';
+    const user = await this.checkToken(token);
+    
     const salt = await bcrypt.genSalt();
     password = await bcrypt.hash(password, salt);
-    const user = await this.prisma.user.update({
+
+    const user_update = await this.prisma.user.update({
       where: {
-        id,
+        id: user.sub,
       },
       data: {
         password,
       },
     });
-    return this.createToken(user);
+    return this.createToken(user_update);
   }
 
   async register(data: AuthRegisterDTO) {
