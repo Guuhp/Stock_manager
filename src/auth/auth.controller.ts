@@ -6,8 +6,11 @@ import { AuthResetDTO } from './dto/auth.reset.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthVerify } from 'src/guards/authVerify.guard';
-
+import { RoleGuard } from 'src/guards/role.guard';
+import { Roles } from 'src/decorators/role.decorator';
+import { Role } from 'src/enums/role.enum';
 @ApiTags('auth')
+@UseGuards(RoleGuard)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -33,6 +36,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthVerify)
+  @Roles(Role.USER)
   @Post('me')
   async me(@Req() req) {
     return {
