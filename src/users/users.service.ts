@@ -2,7 +2,7 @@ import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { CustomHttpException } from 'src/exceptions/expection';
+import { CustomHttpException, NotFoundException } from 'src/exceptions/expection';
 import { log } from 'console';
 
 @Injectable()
@@ -13,19 +13,18 @@ export class UsersService {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: data.email },
     });
-  
+
     if (!existingUser) {
       const salt = await bcrypt.genSalt();
       data.password = await bcrypt.hash(data.password, salt);
-  
+
       return await this.prisma.user.create({
         data,
       });
     }
-  
-    throw new ConflictException("E-mail already registered");
+
+    throw new ConflictException('E-mail already registered');
   }
-  
 
   async findAll() {
     const users = await this.prisma.user.findMany();
@@ -48,5 +47,15 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  async findOne(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if(!user){
+      throw new NotFoundException('user')
+    }
+    return user
   }
 }

@@ -10,10 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 enum StatusDeposit {
   EMPTY
   FULL
   REPLACEMENT
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 enum StatusAccount {
@@ -60,8 +66,11 @@ model User {
   email      String @unique
   password   String
   employeeId String @unique
+  role Role @default(USER)
 
-  statusAccount StatusAccount @default(ACTIVE)
+  
+
+  statusAccount StatusAccount @default(INATIVE)
 
   employee Employee @relation(fields: [employeeId], references: [id])
 

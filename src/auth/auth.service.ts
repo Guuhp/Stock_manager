@@ -44,7 +44,6 @@ export class AuthService {
         audience: 'users',
       });
       return data;
-
     } catch (e) {
       throw new BadRequestException(e);
     }
@@ -80,7 +79,21 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('incorrect email.');
     }
-    const token = await this.createToken(user);
+    const token = {
+      acessToken: await this.jwtService.sign(
+        {
+          //a que pertence o token
+          sub: user?.id,
+          email: user.email,
+          id: user?.id,
+        },
+        {
+          expiresIn: '30 minutes',
+          issuer: 'API NESTJS',
+          audience: 'users',
+        },
+      ),
+    };
 
     await this.email.sendEmail(user.email, token.acessToken);
     return true;
@@ -88,7 +101,7 @@ export class AuthService {
 
   async reset(password: string, token: string) {
     const user = await this.checkToken(token);
-    
+
     const salt = await bcrypt.genSalt();
     password = await bcrypt.hash(password, salt);
 
