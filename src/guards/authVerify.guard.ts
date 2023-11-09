@@ -1,8 +1,6 @@
 import { CanActivate, ExecutionContext, HttpException, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/auth/auth.service';
-import { ForbiddenException } from 'src/exceptions/expection';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
 export class AuthVerify implements CanActivate {

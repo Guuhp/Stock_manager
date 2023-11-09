@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from "class-validator";
+import { IsEnum, IsOptional, IsString } from "class-validator";
 import { AuthLoginDTO } from "./auth-login.dto";
 import { ApiProperty } from "@nestjs/swagger";
 import { Role } from "src/enums/role.enum";
@@ -9,6 +9,7 @@ export class AuthRegisterDTO extends AuthLoginDTO{
     employeeId: string;
 
     @ApiProperty()
-    @IsEnum({})
-    role:Role;
+    @IsOptional()
+    @IsEnum(Role)
+    role:string;
 }

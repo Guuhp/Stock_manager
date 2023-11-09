@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { AuthController } from "./auth.controller";
-import { UsersModule } from "src/users/users.module";
+import { UsersModule } from "src/modules/users/users.module";
 import { PrismaModule } from "src/prisma/prisma.module";
 import { AuthService } from "./auth.service";
-import { SendEmailModule } from "src/send-email/send-email.module";
+import { SendEmailModule } from "src/modules/send-email/send-email.module";
 
 @Module({
     imports: [JwtModule.register({

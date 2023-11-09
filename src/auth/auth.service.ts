@@ -6,10 +6,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
-import { UsersService } from 'src/users/users.service';
-import { SendEmailService } from 'src/send-email/send-email.service';
+import { UsersService } from 'src/modules/users/users.service';
+import { SendEmailService } from 'src/modules/send-email/send-email.service';
+import { NotFoundException } from 'src/exceptions/expection';
+import { StatusAccount } from 'src/enums/statusAccount.enum';
 
 @Injectable()
 export class AuthService {
@@ -95,7 +97,7 @@ export class AuthService {
       ),
     };
 
-    await this.email.sendEmail(user.email, token.acessToken);
+    await this.email.sendEmailResetPassword(user.email, token.acessToken);
     return true;
   }
 
@@ -118,6 +120,23 @@ export class AuthService {
 
   async register(data: AuthRegisterDTO) {
     const user = await this.userService.create(data);
-    return this.createToken(user);
+    const token = await this.createToken(user);
+    const confirAccount = await this.email.confirmationAccount(
+      data.email,
+      (await token).acessToken,
+    );
+    return confirAccount;
+  }
+
+  async confirmationAccount(token: string) {
+    const user = await this.checkToken(token);
+    const existsUser = await this.userService.findOne(user.id);
+    if (!existsUser) {
+      throw new NotFoundException(user);
+    }
+    existsUser.statusAccount = StatusAccount.ACTIVE;
+    
+    const userUpdate = await this.userService.update(existsUser.id, existsUser);
+    return userUpdate
   }
 }

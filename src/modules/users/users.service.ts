@@ -2,8 +2,12 @@ import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { CustomHttpException, NotFoundException } from 'src/exceptions/expection';
+import {
+  CustomHttpException,
+  NotFoundException,
+} from 'src/exceptions/expection';
 import { log } from 'console';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -53,9 +57,17 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
-    if(!user){
-      throw new NotFoundException('user')
+    if (!user) {
+      throw new NotFoundException('user');
     }
+    return user;
+  }
+
+  async update(id: string, data) {
+    const user = this.prisma.user.update({
+      where: { id: id },
+      data,
+    });
     return user
   }
 }

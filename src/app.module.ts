@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { PersonModule } from './person/person.module';
-import { EmployeeModule } from './employee/employee.module';
+import { UsersModule } from './modules/users/users.module';
+import { PersonModule } from './modules/person/person.module';
+import { EmployeeModule } from './modules/employee/employee.module';
 import { AuthModule } from './auth/auth.module';
-import { SendEmailModule } from './send-email/send-email.module';
+import { SendEmailModule } from './modules/send-email/send-email.module';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { SendEmailModule } from './send-email/send-email.module';
     PersonModule,
     EmployeeModule,
     AuthModule,
-    SendEmailModule
+    SendEmailModule,
   ],
 
   controllers: [],
