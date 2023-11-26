@@ -87,7 +87,7 @@ model Warehouse {
   telephone String
 
   users   AssociateUserWarehouse[]
-  Deposit Deposit[]
+  deposit Deposit[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
