@@ -19,6 +19,4 @@ export class EmployeeController {
     return this.employeeService.create(createEmployeeDto);
   }
 
-
-
 }

@@ -27,6 +27,14 @@ export class WarehouseService {
     return warehouse;
   }
 
+  async findAll() {
+    const warehouses = await this.prisma.warehouse.findMany();
+    if (warehouses.length == 0) {
+      throw new NotFoundException('warehouse');
+    }
+    return warehouses;
+  }
+
   async update(id: string, data: UpdateWarehouseDto) {
     const existsWarehouse = await this.prisma.warehouse.findUnique({
       where: { id },
@@ -52,5 +60,17 @@ export class WarehouseService {
     });
 
     return updateWarehouse;
+  }
+
+  async findById(id: string){
+    const warehouse = await this.prisma.warehouse.findUnique({
+      where: { id },
+    });
+
+    if (!warehouse) {
+      throw new NotFoundException('warehouse');
+    }
+
+    return warehouse;
   }
 }

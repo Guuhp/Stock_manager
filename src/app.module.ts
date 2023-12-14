@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { SendEmailModule } from './modules/send-email/send-email.module';
 import { WarehouseModule } from './modules/warehouse/warehouse.module';
 import { AssociateUserWarehouseModule } from './modules/associate-user-warehouse/associate-user-warehouse.module';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from './exceptions/filterException';
 
 @Module({
   imports: [
@@ -19,6 +21,11 @@ import { AssociateUserWarehouseModule } from './modules/associate-user-warehouse
   ],
 
   controllers: [],
-  providers: [],
+  providers: [
+      {
+        provide: APP_FILTER,
+        useClass: AllExceptionsFilter,
+      }
+  ],
 })
 export class AppModule {}

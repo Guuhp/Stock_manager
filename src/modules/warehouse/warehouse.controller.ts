@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Patch,
   Post,
@@ -20,6 +21,16 @@ import { AuthVerify } from 'src/guards/authVerify.guard';
 @Controller('warehouse')
 export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}
+
+  @Get()
+  findAll() {
+    return this.warehouseService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.warehouseService.findById(id);
+  }
 
   @Roles(Role.ADMIN)
   @Post()
