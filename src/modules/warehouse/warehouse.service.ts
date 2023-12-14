@@ -66,11 +66,11 @@ export class WarehouseService {
     const warehouse = await this.prisma.warehouse.findUnique({
       where: { id },
     });
-
-    if (!warehouse) {
-      throw new NotFoundException('warehouse');
-    }
-
-    return warehouse;
+    return warehouse
+    //if (!warehouse) {
+    //  throw new NotFoundException('warehouse');
+    //}
+//
+    //return warehouse;
   }
 }

@@ -7,7 +7,7 @@ import { SendEmailModule } from './modules/send-email/send-email.module';
 import { WarehouseModule } from './modules/warehouse/warehouse.module';
 import { AssociateUserWarehouseModule } from './modules/associate-user-warehouse/associate-user-warehouse.module';
 import { APP_FILTER } from '@nestjs/core';
-import { AllExceptionsFilter } from './exceptions/filterException';
+import { ExceptionsFilterGlobal } from './exceptions/exceptionsFilterGlobal';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { AllExceptionsFilter } from './exceptions/filterException';
   providers: [
       {
         provide: APP_FILTER,
-        useClass: AllExceptionsFilter,
+        useClass: ExceptionsFilterGlobal,
       }
   ],
 })
