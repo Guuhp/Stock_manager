@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthLoginDTO } from './dto/auth-login.dto';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { AuthForgetDTO } from './dto/auth-forget.dto';
@@ -9,6 +9,7 @@ import { AuthVerify } from 'src/guards/authVerify.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/enums/role.enum';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('auth')
 @UseGuards(RoleGuard)
 @Controller('auth')
@@ -49,5 +50,19 @@ export class AuthController {
       data: req.tokenPayload,
       //user: user,
     };
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleLogin() {}
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  googleLoginCallback(@Req() req, @Res() res) {
+    const { user } = req;
+
+    // Aqui você pode adicionar lógica para salvar o usuário no banco de dados ou realizar outras operações
+
+    res.redirect('http://localhost:3000/sucesso'); // Redirecione para a página desejada após a autenticação bem-sucedida
   }
 }

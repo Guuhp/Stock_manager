@@ -5,10 +5,6 @@ import { Role } from "src/enums/role.enum";
 
 export class AuthRegisterDTO extends AuthLoginDTO{
     @ApiProperty()
-    @IsString()
-    employeeId: string;
-
-    @ApiProperty()
     @IsOptional()
     @IsEnum(Role)
     role:string;

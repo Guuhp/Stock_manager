@@ -121,6 +121,7 @@ export class AuthService {
   async register(data: AuthRegisterDTO) {
     const user = await this.userService.create(data);
     const token = await this.createToken(user);
+    //CONFIRMAÇÃO DE CONTA NO EMAIL
     const confirAccount = await this.email.confirmationAccount(
       data.email,
       (await token).acessToken,

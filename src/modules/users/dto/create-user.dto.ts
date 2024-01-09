@@ -12,9 +12,4 @@ export class CreateUserDto {
   @MinLength(6, { message: 'Senha muito curta' })
   password: string;
 
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  employeeId: string;
-
 }

@@ -1,21 +1,24 @@
-import { Module } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
-import { AuthController } from "./auth.controller";
-import { UsersModule } from "src/modules/users/users.module";
-import { PrismaModule } from "src/prisma/prisma.module";
-import { AuthService } from "./auth.service";
-import { SendEmailModule } from "src/modules/send-email/send-email.module";
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './auth.controller';
+import { UsersModule } from 'src/modules/users/users.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { AuthService } from './auth.service';
+import { SendEmailModule } from 'src/modules/send-email/send-email.module';
+import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
-    imports: [JwtModule.register({
-        secret: process.env.SECRET
+  imports: [
+    JwtModule.register({
+      secret: process.env.SECRET,
     }),
-        UsersModule,
-        PrismaModule,
-        SendEmailModule
-    ],
-    controllers: [AuthController],
-    providers:[AuthService],
-    exports:[AuthService]
+    UsersModule,
+    PrismaModule,
+    SendEmailModule
+  ],
+  controllers: [AuthController],
+  providers: [AuthService],
+  exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}
