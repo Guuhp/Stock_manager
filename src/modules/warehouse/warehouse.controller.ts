@@ -17,7 +17,7 @@ import { Role } from 'src/enums/role.enum';
 import { AuthVerify } from 'src/guards/authVerify.guard';
 
 @ApiTags('warehouse')
-//@UseGuards(RoleGuard, AuthVerify)
+@UseGuards(RoleGuard, AuthVerify)
 @Controller('warehouse')
 export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}

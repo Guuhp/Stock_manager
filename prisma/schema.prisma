@@ -9,19 +9,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-generator erd {
-  provider = "prisma-erd-generator"
-}
 
-generator dbml {
-  provider = "prisma-dbml-generator"
-}
+//generator erd {
+//  provider = "prisma-erd-generator"
+//}
 
+//generator dbml {
+//  provider = "prisma-dbml-generator"
+//}
 
-generator class_validator {
-  provider = "prisma-class-validator-generator"
-  output = "./out"
-}
+//generator class_validator {
+//  provider = "prisma-class-validator-generator"
+//  output = "./out"
+//}
 
 enum StatusDeposit {
   EMPTY
@@ -42,13 +42,13 @@ enum StatusAccount {
 model User {
   id String @id @default(uuid())
 
-  email      String @unique
-  password   String
-  role       Role   @default(USER)
+  email    String @unique
+  password String
+  role     Role   @default(USER)
 
   statusAccount StatusAccount @default(INATIVE)
 
-  warehouses AssociateUserWarehouse[]
+  warehousesUser AssociateUserWarehouse[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -63,8 +63,8 @@ model Warehouse {
   code      Int    @unique
   telephone String @unique
 
-  users   AssociateUserWarehouse[]
-  deposit Deposit[]
+  usersWarehouse AssociateUserWarehouse[]
+  deposit        Deposit[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

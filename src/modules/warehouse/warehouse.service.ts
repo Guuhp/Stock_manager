@@ -29,7 +29,7 @@ export class WarehouseService {
 
   async findAll() {
     const warehouses = await this.prisma.warehouse.findMany({
-      include: { users: true, deposit: true },
+      include: { usersWarehouse: true, deposit: true },
     });
     console.log(warehouses);
 

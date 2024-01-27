@@ -1,5 +1,6 @@
-import { CanActivate, ExecutionContext, HttpException, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
+import { ForbiddenException } from 'src/exceptions/expection';
 import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class AuthVerify implements CanActivate {
       request.user = await this.userService.findOne(data.id);
       return true;
     } catch {
-      new HttpException('message', 400, { cause: new Error('Some Error') });
+      new ForbiddenException("Forbidden resource")
     }
   }
 }

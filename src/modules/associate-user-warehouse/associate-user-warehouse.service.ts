@@ -8,7 +8,7 @@ import { NotFoundException } from 'src/exceptions/expection';
 export class AssociateUserWarehouseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: CreateAssociateUserWarehouseDto) {
+  async AssociateUserWarehouse(data: CreateAssociateUserWarehouseDto) {
     const [existsUser, existsWarehouse] = await Promise.all([
       await this.prisma.user.findUnique({ where: { id: data.userId } }),
       await this.prisma.warehouse.findUnique({
@@ -36,6 +36,23 @@ export class AssociateUserWarehouseService {
         data,
       });
     return associateUserWarehouse;
+  }
+
+  async deleteAssociateUserWarehouse(id: string) {
+    const existAssociateUserWarehouse =
+      await this.prisma.associateUserWarehouse.findFirst({
+        where: { id },
+      });
+
+    if (!existAssociateUserWarehouse) {
+      throw new NotFoundException('AssociateUserWarehouse not found');
+    }
+
+    const response = await this.prisma.associateUserWarehouse.delete({
+      where: { id },
+    });
+
+    return { success: true, message: 'association successfully deleted' };
   }
 
   findAll() {
