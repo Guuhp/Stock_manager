@@ -1,7 +1,7 @@
 import { AssociateUserWarehouse, Deposit } from "@prisma/client";
 
 export class Warehouse {
-    id: string;
+    id?: string;
     name: string;
     code:number
     telephone: string;

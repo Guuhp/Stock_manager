@@ -1,12 +1,13 @@
-import { IsNumber, IsNumberString, IsString} from "class-validator";
+import { IsNumber, IsNumberString, IsString } from "class-validator";
+import { User } from "src/modules/users/entities/user.entity";
 
-export class CreateWarehouseDto {
+export class CreateWarehouseDto extends User{
     @IsString()
     name: string;
   
     @IsNumber()
     code: number;
   
-    @IsNumberString()
+    @IsString()
     telephone: string;
 }

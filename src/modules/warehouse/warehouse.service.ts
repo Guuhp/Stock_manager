@@ -5,7 +5,6 @@ import {
   CustomHttpException,
   NotFoundException,
 } from 'src/exceptions/expection';
-import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 
 @Injectable()
 export class WarehouseService {
@@ -13,7 +12,7 @@ export class WarehouseService {
 
   async create(data: CreateWarehouseDto) {
     const existsWarehouse = await this.prisma.warehouse.findUnique({
-      where: { code: data.code },
+      where: { code: data.code},
     });
     if (existsWarehouse) {
       throw new CustomHttpException(
@@ -21,6 +20,7 @@ export class WarehouseService {
         'existing warehouse',
       );
     }
+    console.log(data);
     const warehouse = await this.prisma.warehouse.create({
       data,
     });
@@ -28,49 +28,14 @@ export class WarehouseService {
   }
 
   async findAll() {
-    const warehouses = await this.prisma.warehouse.findMany();
+    const warehouses = await this.prisma.warehouse.findMany({
+      include: { users: true, deposit: true },
+    });
+    console.log(warehouses);
+
     if (warehouses.length == 0) {
       throw new NotFoundException('warehouse');
     }
     return warehouses;
-  }
-
-  async update(id: string, data: UpdateWarehouseDto) {
-    const existsWarehouse = await this.prisma.warehouse.findUnique({
-      where: { id },
-    });
-
-    if (!existsWarehouse) {
-      throw new NotFoundException('warehouse');
-    }
-
-    if (data.code !== undefined) {
-      const existsCode = await this.prisma.warehouse.findUnique({
-        where: { code: data.code },
-      });
-
-      if (existsCode) {
-        throw new NotFoundException('warehouse');
-      }
-    }
-
-    const updateWarehouse = await this.prisma.warehouse.update({
-      where: { id },
-      data,
-    });
-
-    return updateWarehouse;
-  }
-
-  async findById(id: string){
-    const warehouse = await this.prisma.warehouse.findUnique({
-      where: { id },
-    });
-    return warehouse
-    //if (!warehouse) {
-    //  throw new NotFoundException('warehouse');
-    //}
-//
-    //return warehouse;
   }
 }

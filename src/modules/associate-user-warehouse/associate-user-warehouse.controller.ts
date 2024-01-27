@@ -16,19 +16,4 @@ export class AssociateUserWarehouseController {
   findAll() {
     return this.associateUserWarehouseService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.associateUserWarehouseService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssociateUserWarehouseDto: UpdateAssociateUserWarehouseDto) {
-    return this.associateUserWarehouseService.update(+id, updateAssociateUserWarehouseDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.associateUserWarehouseService.remove(+id);
-  }
 }

@@ -5,8 +5,6 @@ import { UsersModule } from 'src/modules/users/users.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AuthService } from './auth.service';
 import { SendEmailModule } from 'src/modules/send-email/send-email.module';
-import { ConfigModule } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [

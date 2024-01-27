@@ -60,9 +60,14 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException(
-        'user not found, check email and password',
+        'User not found. Please check your email and password.',
       );
     }
+
+    if (user.statusAccount === StatusAccount.INATIVE) {
+      throw new UnauthorizedException('Your account is inactive.');
+    }
+
     //informação e eu quero comparar / a que esta em hash
     if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException(
@@ -124,7 +129,9 @@ export class AuthService {
     //CONFIRMAÇÃO DE CONTA NO EMAIL
     const confirAccount = await this.email.confirmationAccount(
       data.email,
-      (await token).acessToken,
+      (
+        await token
+      ).acessToken,
     );
     return confirAccount;
   }
@@ -136,8 +143,8 @@ export class AuthService {
       throw new NotFoundException(user);
     }
     existsUser.statusAccount = StatusAccount.ACTIVE;
-    
+
     const userUpdate = await this.userService.update(existsUser.id, existsUser);
-    return userUpdate
+    return userUpdate;
   }
 }

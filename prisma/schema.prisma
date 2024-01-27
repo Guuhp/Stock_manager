@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 enum StatusDeposit {
   EMPTY
   FULL
@@ -48,7 +49,7 @@ model Warehouse {
 
   name      String
   code      Int    @unique
-  telephone String
+  telephone String @unique
 
   users   AssociateUserWarehouse[]
   deposit Deposit[]

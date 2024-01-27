@@ -5,7 +5,6 @@ export class User {
   id?: string;
   email: string;
   password: string;
-  employeeId: string;
   role:Role;
   statusAccount: StatusAccount;
   created_at?: string;

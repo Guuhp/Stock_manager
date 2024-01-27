@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateAssociateUserWarehouseDto } from './dto/create-associate-user-warehouse.dto';
 import { UpdateAssociateUserWarehouseDto } from './dto/update-associate-user-warehouse.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { NotFoundException } from 'src/exceptions/expection';
 
 @Injectable()
 export class AssociateUserWarehouseService {
-  create(createAssociateUserWarehouseDto: CreateAssociateUserWarehouseDto) {
-    return 'This action adds a new associateUserWarehouse';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(data: CreateAssociateUserWarehouseDto) {
+    const [existsUser, existsWarehouse] = await Promise.all([
+      await this.prisma.user.findUnique({ where: { id: data.userId } }),
+      await this.prisma.warehouse.findUnique({
+        where: { id: data.warehouseId },
+      }),
+    ]);
+
+    if (!existsUser || !existsWarehouse) {
+      throw new NotFoundException('User or Warehouse');
+    }
+
+    const existingAssociation =
+      await this.prisma.associateUserWarehouse.findFirst({
+        where: {
+          userId: data.userId,
+          warehouseId: data.warehouseId,
+        },
+      });
+
+    if (existingAssociation) {
+      throw new ConflictException('Association already exists');
+    }
+    const associateUserWarehouse =
+      await this.prisma.associateUserWarehouse.create({
+        data,
+      });
+    return associateUserWarehouse;
   }
 
   findAll() {
-    return `This action returns all associateUserWarehouse`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} associateUserWarehouse`;
-  }
-
-  update(id: number, updateAssociateUserWarehouseDto: UpdateAssociateUserWarehouseDto) {
-    return `This action updates a #${id} associateUserWarehouse`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} associateUserWarehouse`;
+    return this.prisma.associateUserWarehouse.findMany();
   }
 }

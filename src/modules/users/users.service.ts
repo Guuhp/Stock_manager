@@ -1,4 +1,4 @@
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -6,8 +6,7 @@ import {
   CustomHttpException,
   NotFoundException,
 } from 'src/exceptions/expection';
-import { log } from 'console';
-import { User } from './entities/user.entity';
+
 
 @Injectable()
 export class UsersService {
