@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
 import { Roles } from 'src/decorators/role.decorator';
@@ -18,5 +26,11 @@ export class UsersController {
   @Roles(Role.ADMIN)
   changeUserRole(@Param('id') id: string, @Body('role') newRole: Role) {
     return this.usersService.changeUserRole(id, newRole);
+  }
+
+  @Delete(':id')
+  @Roles(Role.ADMIN)
+  async delete(@Param('id') id: string) {
+    return this.usersService.delete(id);
   }
 }

@@ -13,6 +13,7 @@ import {
   NotFoundException,
 } from 'src/exceptions/expection';
 import { Role } from 'src/enums/role.enum';
+import { StatusAccount } from 'src/enums/statusAccount.enum';
 
 @Injectable()
 export class UsersService {
@@ -94,5 +95,29 @@ export class UsersService {
       // Handle any potential database update errors
       throw new InternalErrorException('Failed to update user role');
     }
+  }
+
+  async delete(id: string) {
+    const user = await this.prisma.user.findFirst({
+      where: { id },
+    });
+
+    if (!user) throw new NotFoundException('user');
+
+    if (user.statusAccount == StatusAccount.INATIVE)
+      throw new NotFoundException('user');
+
+    await this.prisma.$transaction([
+      this.prisma.user.updateMany({
+        where: {
+          id: user.id,
+        },
+        data: {
+          statusAccount: StatusAccount.INATIVE,
+        },
+      }),
+    ]);
+
+    return { status: 200, message: 'User deleted successfully' };
   }
 }
