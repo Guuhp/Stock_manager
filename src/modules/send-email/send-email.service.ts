@@ -39,14 +39,16 @@ export class SendEmailService {
     });
   }
 
-  async confirmationAccount(to: string, link: string) {
+  async sendEmailconfirmationAccount(user: string, to: string, link: string) {
     let htmlContent: string;
 
     htmlContent = fs.readFileSync(
       'src/templates/account_confirmation.html',
       'utf8',
     );
-    htmlContent = htmlContent.replace('{{link}}', link);
+    htmlContent = htmlContent
+      .replace('{{link}}', process.env.HOST+"/confirmation/"+link)
+      .replace('{{username}}', user);
 
     const mailOptions = {
       from: process.env.EMAIL,

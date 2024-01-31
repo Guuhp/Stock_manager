@@ -52,17 +52,4 @@ export class AuthController {
     };
   }
 
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleLogin() {}
-
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Req() req, @Res() res) {
-    const { user } = req;
-
-    // Aqui você pode adicionar lógica para salvar o usuário no banco de dados ou realizar outras operações
-
-    res.redirect('http://localhost:3000/sucesso'); // Redirecione para a página desejada após a autenticação bem-sucedida
-  }
 }

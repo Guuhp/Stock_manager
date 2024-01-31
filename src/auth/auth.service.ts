@@ -40,14 +40,17 @@ export class AuthService {
     };
   }
 
-  async checkToken(token: string) {
+  async validateToken(token: string) {
     try {
       const data = this.jwtService.verify(token, {
         audience: 'users',
       });
       return data;
     } catch (e) {
-      throw new BadRequestException(e);
+      if (e.name === 'TokenExpiredError') {
+        throw new UnauthorizedException('Token has expired');
+      }
+      throw new BadRequestException('Invalid token');
     }
   }
 
@@ -83,9 +86,8 @@ export class AuthService {
         email,
       },
     });
-    if (!user) {
-      throw new UnauthorizedException('incorrect email.');
-    }
+    if (!user) throw new UnauthorizedException('incorrect email.');
+
     const token = {
       acessToken: await this.jwtService.sign(
         {
@@ -101,33 +103,37 @@ export class AuthService {
         },
       ),
     };
-
+    console.log(token.acessToken);
+    
     await this.email.sendEmailResetPassword(user.email, token.acessToken);
     return true;
   }
 
   async reset(password: string, token: string) {
-    const user = await this.checkToken(token);
+    await this.prisma.$transaction(async () => {
+      const user = await this.validateToken(token);
 
-    const salt = await bcrypt.genSalt();
-    password = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt();
+      password = await bcrypt.hash(password, salt);
 
-    const user_update = await this.prisma.user.update({
-      where: {
-        id: user.sub,
-      },
-      data: {
-        password,
-      },
+      const user_update = await this.prisma.user.update({
+        where: {
+          id: user.sub,
+        },
+        data: {
+          password,
+        },
+      });
+      return this.createToken(user_update);
     });
-    return this.createToken(user_update);
   }
 
   async register(data: AuthRegisterDTO) {
     const user = await this.userService.create(data);
     const token = await this.createToken(user);
     //CONFIRMAÇÃO DE CONTA NO EMAIL
-    const confirAccount = await this.email.confirmationAccount(
+    const confirAccount = await this.email.sendEmailconfirmationAccount(
+      user.email,
       data.email,
       (
         await token
@@ -137,11 +143,11 @@ export class AuthService {
   }
 
   async confirmationAccount(token: string) {
-    const user = await this.checkToken(token);
+    const user = await this.validateToken(token);
     const existsUser = await this.userService.findOne(user.id);
-    if (!existsUser) {
-      throw new NotFoundException(user);
-    }
+
+    if (!existsUser) throw new NotFoundException(user);
+
     existsUser.statusAccount = StatusAccount.ACTIVE;
 
     const userUpdate = await this.userService.update(existsUser.id, existsUser);

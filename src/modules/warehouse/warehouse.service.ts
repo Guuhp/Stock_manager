@@ -12,7 +12,7 @@ export class WarehouseService {
 
   async create(data: CreateWarehouseDto) {
     const existsWarehouse = await this.prisma.warehouse.findUnique({
-      where: { code: data.code},
+      where: { code: data.code },
     });
     if (existsWarehouse) {
       throw new CustomHttpException(

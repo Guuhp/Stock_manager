@@ -48,7 +48,7 @@ export class AssociateUserWarehouseService {
       throw new NotFoundException('AssociateUserWarehouse not found');
     }
 
-    const response = await this.prisma.associateUserWarehouse.delete({
+   await this.prisma.associateUserWarehouse.delete({
       where: { id },
     });
 

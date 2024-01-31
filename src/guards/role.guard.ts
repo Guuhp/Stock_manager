@@ -27,7 +27,7 @@ export class RoleGuard implements CanActivate {
   
       const request = context.switchToHttp().getRequest();
       const { authorization } = request.headers;
-      const data = await this.authService.checkToken(
+      const data = await this.authService.validateToken(
         (authorization ?? '').split(' ')[1],
       );
       

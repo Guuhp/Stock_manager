@@ -15,7 +15,7 @@ export class AuthVerify implements CanActivate {
     const { authorization } = request.headers;
 
     try {
-      const data = await this.authService.checkToken(
+      const data = await this.authService.validateToken(
         (authorization ?? '').split(' ')[1],
       );
       request.tokenPayload = data;

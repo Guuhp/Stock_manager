@@ -14,6 +14,7 @@ import { ExceptionsFilterGlobal } from './exceptions/exceptionsFilterGlobal';
     SendEmailModule,
     WarehouseModule,
     AssociateUserWarehouseModule,
+    
   ],
 
   controllers: [],
