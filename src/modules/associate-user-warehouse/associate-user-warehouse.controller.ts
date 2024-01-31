@@ -10,14 +10,15 @@ import {
 import { AssociateUserWarehouseService } from './associate-user-warehouse.service';
 import { CreateAssociateUserWarehouseDto } from './dto/create-associate-user-warehouse.dto';
 import { RoleGuard } from 'src/guards/role.guard';
-import { AuthVerify } from 'src/guards/authVerify.guard';
-@UseGuards(RoleGuard, AuthVerify)
+import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
+@UseGuards(RoleGuard, authenticateGuard)
 @Controller('associate-user-warehouse')
 export class AssociateUserWarehouseController {
   constructor(
     private readonly associateUserWarehouseService: AssociateUserWarehouseService,
   ) {}
 
+  
   @Post()
   create(
     @Body() createAssociateUserWarehouseDto: CreateAssociateUserWarehouseDto,
@@ -34,6 +35,6 @@ export class AssociateUserWarehouseController {
 
   @Delete(':id')
   delete(@Param('id') id: string) {
-    return this.associateUserWarehouseService.deleteAssociateUserWarehouse(id);
+    return this.associateUserWarehouseService.removeAssociateUserWarehouse(id);
   }
 }

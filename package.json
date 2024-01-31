@@ -42,6 +42,7 @@
     "nodemailer": "^6.9.7",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "prisma-class-generator": "^0.2.9",
     "prisma-class-validator-generator": "^0.2.0",
     "prisma-uml": "^1.1.18",
     "reflect-metadata": "^0.1.13",

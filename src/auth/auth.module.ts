@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { UsersModule } from 'src/modules/users/users.module';
@@ -11,9 +11,9 @@ import { SendEmailModule } from 'src/modules/send-email/send-email.module';
     JwtModule.register({
       secret: process.env.SECRET,
     }),
-    UsersModule,
     PrismaModule,
-    SendEmailModule
+    SendEmailModule,
+    forwardRef(() => UsersModule)
   ],
   controllers: [AuthController],
   providers: [AuthService],

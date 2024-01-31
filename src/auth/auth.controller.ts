@@ -5,7 +5,7 @@ import { AuthForgetDTO } from './dto/auth-forget.dto';
 import { AuthResetDTO } from './dto/auth.reset.dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthVerify } from 'src/guards/authVerify.guard';
+import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/enums/role.enum';
@@ -41,7 +41,7 @@ export class AuthController {
     return this.authService.confirmationAccount(token);
   }
 
-  @UseGuards(AuthVerify)
+  @UseGuards(authenticateGuard)
   @Roles(Role.USER)
   @Post('me')
   async me(@Req() req) {

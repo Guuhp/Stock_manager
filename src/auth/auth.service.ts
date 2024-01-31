@@ -62,9 +62,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException(
-        'User not found. Please check your email and password.',
-      );
+      throw new UnauthorizedException('Incorrect email or password.');
     }
 
     if (user.statusAccount === StatusAccount.INATIVE) {
@@ -73,9 +71,7 @@ export class AuthService {
 
     //informação e eu quero comparar / a que esta em hash
     if (!(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException(
-        'user not found, check email and password',
-      );
+      throw new UnauthorizedException('Incorrect email or password.');
     }
     return this.createToken(user);
   }
@@ -104,7 +100,7 @@ export class AuthService {
       ),
     };
     console.log(token.acessToken);
-    
+
     await this.email.sendEmailResetPassword(user.email, token.acessToken);
     return true;
   }

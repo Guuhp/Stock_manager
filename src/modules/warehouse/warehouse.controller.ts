@@ -14,10 +14,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/enums/role.enum';
-import { AuthVerify } from 'src/guards/authVerify.guard';
+import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
 
 @ApiTags('warehouse')
-@UseGuards(RoleGuard, AuthVerify)
+@UseGuards(RoleGuard, authenticateGuard)
 @Controller('warehouse')
 export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}

@@ -23,6 +23,11 @@ datasource db {
 //  output = "./out"
 //}
 
+//generator prismaClassGenerator {
+//    provider = "prisma-class-generator"
+//    output = "./swagger-class"
+//}
+
 enum StatusDeposit {
   EMPTY
   FULL

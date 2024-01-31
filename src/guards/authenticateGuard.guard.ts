@@ -4,7 +4,7 @@ import { ForbiddenException } from 'src/exceptions/expection';
 import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
-export class AuthVerify implements CanActivate {
+export class authenticateGuard implements CanActivate {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,

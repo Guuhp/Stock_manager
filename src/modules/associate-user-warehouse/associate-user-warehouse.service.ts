@@ -38,7 +38,7 @@ export class AssociateUserWarehouseService {
     return associateUserWarehouse;
   }
 
-  async deleteAssociateUserWarehouse(id: string) {
+  async removeAssociateUserWarehouse(id: string) {
     const existAssociateUserWarehouse =
       await this.prisma.associateUserWarehouse.findFirst({
         where: { id },
