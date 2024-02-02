@@ -1,4 +1,3 @@
-import { Deposit } from "@prisma/client";
 import { User } from "src/modules/users/entities/user.entity";
 
 export class Warehouse {
@@ -7,7 +6,6 @@ export class Warehouse {
     code:number
     telephone: string;
     users: User[]
-    Deposit: Deposit[]
   
     created_at?: string;
     updated_at?: string;

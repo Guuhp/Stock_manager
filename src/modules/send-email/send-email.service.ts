@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import * as fs from 'fs';
 import { CustomHttpException } from 'src/exceptions/expection';
@@ -16,6 +16,34 @@ export class SendEmailService {
       },
     });
   }
+
+  async sendEmailconfirmationAccount(user: string, to: string, link: string) {
+    let htmlContent: string;
+
+    htmlContent = fs.readFileSync(
+      'src/templates/account_confirmation.html',
+      'utf8',
+    );
+    htmlContent = htmlContent
+      .replace('{{link}}', `${process.env.HOST}/auth/confirmation/${link}`)
+      .replace('{{username}}', user);
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: to,
+      subject: 'Confirmação de Conta',
+      html: htmlContent,
+    };
+
+    await this.transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.error('Error by sending email: ', error);
+        throw new CustomHttpException(409, 'Error by sending email');
+      }
+    });
+    return { status: 200, message: 'Email successfully sent' };
+  }
+
 
   async sendEmailResetPassword(to: string, link: string) {
     let htmlContent: string;
@@ -37,32 +65,5 @@ export class SendEmailService {
       }
       console.log('Email sent: ', info.response);
     });
-  }
-
-  async sendEmailconfirmationAccount(user: string, to: string, link: string) {
-    let htmlContent: string;
-
-    htmlContent = fs.readFileSync(
-      'src/templates/account_confirmation.html',
-      'utf8',
-    );
-    htmlContent = htmlContent
-      .replace('{{link}}', process.env.HOST+"/confirmation/"+link)
-      .replace('{{username}}', user);
-
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: to,
-      subject: 'Confirmação de Conta',
-      html: htmlContent,
-    };
-
-    await this.transporter.sendMail(mailOptions, (error) => {
-      if (error) {
-        console.error('Error by sending email: ', error);
-        throw new CustomHttpException(409, 'Error by sending email');
-      }
-    });
-    return { status: 200, message: 'Email successfully sent' };
   }
 }

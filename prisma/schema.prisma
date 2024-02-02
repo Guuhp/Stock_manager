@@ -10,25 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//generator erd {
-//  provider = "prisma-erd-generator"
-//}
+generator erd {
+  provider = "prisma-erd-generator"
+}
 
-//generator dbml {
-//  provider = "prisma-dbml-generator"
-//}
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
 
-//generator class_validator {
-//  provider = "prisma-class-validator-generator"
-//  output = "./out"
-//}
+generator class_validator {
+  provider = "prisma-class-validator-generator"
+  output = "./out"
+}
 
-//generator prismaClassGenerator {
-//    provider = "prisma-class-generator"
-//    output = "./swagger-class"
-//}
+generator prismaClassGenerator {
+    provider = "prisma-class-generator"
+    output = "./swagger-class"
+}
 
-enum StatusDeposit {
+enum StatusWarehouse {
   EMPTY
   FULL
   REPLACEMENT
@@ -69,7 +69,6 @@ model Warehouse {
   telephone String @unique
 
   usersWarehouse AssociateUserWarehouse[]
-  deposit        Deposit[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -89,24 +88,6 @@ model AssociateUserWarehouse {
   @@map("associate_user_wharehouse")
 }
 
-model Deposit {
-  id String @id @default(uuid())
-
-  name              String
-  initial_inventory Int
-  current_inventory Int
-
-  warehouseId String
-  warehouse   Warehouse     @relation(fields: [warehouseId], references: [id])
-  status      StatusDeposit @default(EMPTY)
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  Product    Product[]
-
-  @@map("deposits")
-}
-
 //PRODUTO
 model Product {
   id String @id @default(uuid())
@@ -115,9 +96,6 @@ model Product {
   unit_of_measurement String
   description         String
   price               Float
-
-  deposit   Deposit @relation(fields: [depositId], references: [id])
-  depositId String
 
   category          CategoryProduct            @relation(fields: [categoryProductId], references: [id])
   categoryProductId String
