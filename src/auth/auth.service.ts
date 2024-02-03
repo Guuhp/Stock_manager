@@ -99,7 +99,7 @@ export class AuthService {
         },
       ),
     };
-    console.log(token.acessToken);
+    console.log("TOKEN:"+token.acessToken);
 
     await this.email.sendEmailResetPassword(user.email, token.acessToken);
     return true;

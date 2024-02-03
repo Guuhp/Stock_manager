@@ -10,23 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-}
-
-generator dbml {
-  provider = "prisma-dbml-generator"
-}
-
-generator class_validator {
-  provider = "prisma-class-validator-generator"
-  output = "./out"
-}
-
-generator prismaClassGenerator {
-    provider = "prisma-class-generator"
-    output = "./swagger-class"
-}
+//generator erd {
+//  provider = "prisma-erd-generator"
+//}
+//
+//generator dbml {
+//  provider = "prisma-dbml-generator"
+//}
+//
+//generator class_validator {
+//  provider = "prisma-class-validator-generator"
+//  output = "./out"
+//}
+//
+//generator prismaClassGenerator {
+//    provider = "prisma-class-generator"
+//    output = "./swagger-class"
+//}
 
 enum StatusWarehouse {
   EMPTY

@@ -6,6 +6,7 @@ import { WarehouseModule } from './modules/warehouse/warehouse.module';
 import { AssociateUserWarehouseModule } from './modules/associate-user-warehouse/associate-user-warehouse.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsFilterGlobal } from './exceptions/exceptionsFilterGlobal';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ExceptionsFilterGlobal } from './exceptions/exceptionsFilterGlobal';
     SendEmailModule,
     WarehouseModule,
     AssociateUserWarehouseModule,
+    ProductModule,
     
   ],
 
