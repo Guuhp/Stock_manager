@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsInt, IsDate } from "class-validator";
-import { AssociateUserWarehouse } from "./";
+import { IsString, IsDefined, IsInt, IsDate, IsOptional } from "class-validator";
+import { AssociateUserWarehouse, Product, AssociateWarehouseProduct } from "./";
 
 export class Warehouse {
     @IsDefined()
@@ -28,4 +28,14 @@ export class Warehouse {
     @IsDefined()
     @IsDate()
     updated_at!: Date;
+
+    @IsOptional()
+    Product?: Product;
+
+    @IsOptional()
+    @IsString()
+    productId?: string;
+
+    @IsDefined()
+    AssociateWarehouseProduct!: AssociateWarehouseProduct[];
 }

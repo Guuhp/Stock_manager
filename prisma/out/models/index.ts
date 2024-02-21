@@ -1,5 +1,6 @@
 export { AssociateProductSupplier } from "./AssociateProductSupplier.model";
 export { AssociateUserWarehouse } from "./AssociateUserWarehouse.model";
+export { AssociateWarehouseProduct } from "./AssociateWarehouseProduct.model";
 export { CategoryProduct } from "./CategoryProduct.model";
 export { Product } from "./Product.model";
 export { Supplier } from "./Supplier.model";

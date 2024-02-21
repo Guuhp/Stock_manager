@@ -1,4 +1,4 @@
-export enum StatusDeposit {
+export enum StatusWarehouse {
     EMPTY = "EMPTY",
     FULL = "FULL",
     REPLACEMENT = "REPLACEMENT"

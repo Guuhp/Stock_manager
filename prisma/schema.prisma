@@ -13,19 +13,19 @@ datasource db {
 //generator erd {
 //  provider = "prisma-erd-generator"
 //}
-//
+
 //generator dbml {
 //  provider = "prisma-dbml-generator"
 //}
-//
+
 //generator class_validator {
 //  provider = "prisma-class-validator-generator"
-//  output = "./out"
+//  output   = "./out"
 //}
-//
+
 //generator prismaClassGenerator {
-//    provider = "prisma-class-generator"
-//    output = "./swagger-class"
+//  provider = "prisma-class-generator"
+//  output   = "./swagger-class"
 //}
 
 enum StatusWarehouse {
@@ -70,8 +70,11 @@ model Warehouse {
 
   usersWarehouse AssociateUserWarehouse[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at                DateTime                    @default(now())
+  updated_at                DateTime                    @updatedAt
+  Product                   Product?                    @relation(fields: [productId], references: [id])
+  productId                 String?
+  AssociateWarehouseProduct AssociateWarehouseProduct[]
 
   @@map("warehouses")
 }
@@ -97,14 +100,27 @@ model Product {
   description         String
   price               Float
 
+  warehouses Warehouse[]
+
   category          CategoryProduct            @relation(fields: [categoryProductId], references: [id])
   categoryProductId String
+  
   ProductSupplier   AssociateProductSupplier[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at                DateTime                    @default(now())
+  updated_at                DateTime                    @updatedAt
+  AssociateWarehouseProduct AssociateWarehouseProduct[]
 
   @@map("products")
+}
+
+model AssociateWarehouseProduct {
+  id        String    @id @default(uuid())
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id])
+
+  product     Product @relation(fields: [productId], references: [id])
+  warehouseId String
+  productId   String
 }
 
 model Supplier {

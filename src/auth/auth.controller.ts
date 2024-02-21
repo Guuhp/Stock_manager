@@ -38,7 +38,6 @@ export class AuthController {
 
   @Get('confirmation/:token')
   async confirmationAccount(@Param('token') token: string) {
-    console.log("hello world")
     return this.authService.confirmationAccount(token);
   }
 

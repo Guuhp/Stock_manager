@@ -21,6 +21,9 @@ Table warehouses {
   usersWarehouse associate_user_wharehouse [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+  Product products
+  productId String
+  AssociateWarehouseProduct AssociateWarehouseProduct [not null]
 }
 
 Table associate_user_wharehouse {
@@ -37,11 +40,21 @@ Table products {
   unit_of_measurement String [not null]
   description String [not null]
   price Float [not null]
+  warehouses warehouses [not null]
   category category_products [not null]
   categoryProductId String [not null]
   ProductSupplier associate_product_supplier [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+  AssociateWarehouseProduct AssociateWarehouseProduct [not null]
+}
+
+Table AssociateWarehouseProduct {
+  id String [pk]
+  warehouse warehouses [not null]
+  product products [not null]
+  warehouseId String [not null]
+  productId String [not null]
 }
 
 Table suppliers {
@@ -72,7 +85,7 @@ Table category_products {
   Products products [not null]
 }
 
-Enum StatusDeposit {
+Enum StatusWarehouse {
   EMPTY
   FULL
   REPLACEMENT
@@ -88,11 +101,17 @@ Enum StatusAccount {
   INATIVE
 }
 
+Ref: warehouses.productId > products.id
+
 Ref: associate_user_wharehouse.userId > users.id
 
 Ref: associate_user_wharehouse.warehouseId > warehouses.id
 
 Ref: products.categoryProductId > category_products.id
+
+Ref: AssociateWarehouseProduct.warehouseId > warehouses.id
+
+Ref: AssociateWarehouseProduct.productId > products.id
 
 Ref: associate_product_supplier.productId > products.id
 
