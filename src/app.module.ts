@@ -8,6 +8,7 @@ import { ExceptionsFilterGlobal } from './exceptions/exceptionsFilterGlobal';
 import { ProductModule } from './modules/product/product.module';
 import { AssociateUserWarehouseModule } from './modules/associates/associate-user-warehouse/associate-user-warehouse.module';
 import { AssociateWarehouseProductModule } from './modules/associates/associate-warehouse-product/associate-warehouse-product.module';
+import { CategoryProductModule } from './modules/category-product/category-product.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AssociateWarehouseProductModule } from './modules/associates/associate-
     AssociateUserWarehouseModule,
     ProductModule,
     AssociateWarehouseProductModule,
+    CategoryProductModule,
     
   ],
 
