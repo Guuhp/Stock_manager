@@ -1,6 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateAssociateUserWarehouseDto } from './dto/create-associate-user-warehouse.dto';
-import { UpdateAssociateUserWarehouseDto } from './dto/update-associate-user-warehouse.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotFoundException } from 'src/exceptions/expection';
 

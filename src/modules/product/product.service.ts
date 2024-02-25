@@ -7,15 +7,23 @@ export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    const users = await this.prisma.product.findMany({});
+    const users = await this.prisma.product.findMany({
+      include: {
+        category: true,
+        warehouses: true,
+        //ProductSupplier: true,
+        //AssociateWarehouseProduct: true
+      },
+    });
     return users;
   }
 
   async create(data: CreateProductDto) {
-    const product =this.prisma.product.create({
-      data
-    })
+    console.log(data);
+    const product = this.prisma.product.create({
+      data,
+    });
 
-    return product
+    return product;
   }
 }
