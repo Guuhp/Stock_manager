@@ -69,9 +69,15 @@ model User {
 model Warehouse {
   id String @id @default(uuid())
 
-  name      String
-  code      Int    @unique
-  telephone String @unique
+  name                  String
+  email String @unique
+  code                  Int    @unique 
+  telephone             String @unique
+
+  totalItems Int //total de itens
+  currentInventoryValue Float // valor de inventario
+  minInventoryThreshold Int // Aciona alertas para estoque baixo
+  maxInventoryThreshold Int // Evita excesso de estoque
 
   usersWarehouse AssociateUserWarehouse[]
 

@@ -11,12 +11,31 @@ export class Warehouse {
     name!: string;
 
     @IsDefined()
+    @IsString()
+    email!: string;
+
+    @IsDefined()
     @IsInt()
     code!: number;
 
     @IsDefined()
     @IsString()
     telephone!: string;
+
+    @IsDefined()
+    @IsInt()
+    totalItems!: number;
+
+    @IsDefined()
+    currentInventoryValue!: number;
+
+    @IsDefined()
+    @IsInt()
+    minInventoryThreshold!: number;
+
+    @IsDefined()
+    @IsInt()
+    maxInventoryThreshold!: number;
 
     @IsDefined()
     usersWarehouse!: AssociateUserWarehouse[];
