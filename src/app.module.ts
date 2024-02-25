@@ -9,6 +9,8 @@ import { ProductModule } from './modules/product/product.module';
 import { AssociateUserWarehouseModule } from './modules/associates/associate-user-warehouse/associate-user-warehouse.module';
 import { AssociateWarehouseProductModule } from './modules/associates/associate-warehouse-product/associate-warehouse-product.module';
 import { CategoryProductModule } from './modules/category-product/category-product.module';
+import { SupplierModule } from './modules/supplier/supplier.module';
+import { AssociateProductSupplierModule } from './modules/associates/associate-product-supplier/associate-product-supplier.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { CategoryProductModule } from './modules/category-product/category-produ
     ProductModule,
     AssociateWarehouseProductModule,
     CategoryProductModule,
+    SupplierModule,
+    AssociateProductSupplierModule,
     
   ],
 

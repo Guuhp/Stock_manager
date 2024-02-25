@@ -18,15 +18,15 @@ datasource db {
 //  provider = "prisma-dbml-generator"
 //}
 
-//generator class_validator {
-//  provider = "prisma-class-validator-generator"
-//  output   = "./out"
-//}
+generator class_validator {
+  provider = "prisma-class-validator-generator"
+  output   = "./out"
+}
 
-//generator prismaClassGenerator {
-//  provider = "prisma-class-generator"
-//  output   = "./swagger-class"
-//}
+generator prismaClassGenerator {
+  provider = "prisma-class-generator"
+  //output   = "./swagger-class"
+}
 
 enum StatusWarehouse {
   EMPTY
@@ -47,9 +47,14 @@ enum StatusAccount {
 model User {
   id String @id @default(uuid())
 
-  email    String @unique
-  password String
-  role     Role   @default(USER)
+  email        String  @unique
+  password     String
+  name         String
+  department   String
+  jobTitle     String
+  profileImage String?
+
+  role Role @default(USER)
 
   statusAccount StatusAccount @default(INATIVE)
 
@@ -102,10 +107,10 @@ model Product {
 
   warehouses Warehouse[]
 
-  category          CategoryProduct            @relation(fields: [categoryProductId], references: [id])
+  category          CategoryProduct @relation(fields: [categoryProductId], references: [id])
   categoryProductId String
-  
-  ProductSupplier   AssociateProductSupplier[]
+
+  ProductSupplier AssociateProductSupplier[]
 
   created_at                DateTime                    @default(now())
   updated_at                DateTime                    @updatedAt
@@ -130,6 +135,7 @@ model Supplier {
   email     String @unique
   telephone String
   address   String
+  cnpj      Int    @unique
 
   created_at      DateTime                   @default(now())
   updated_at      DateTime                   @updatedAt

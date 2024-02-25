@@ -1,13 +1,13 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsJWT, IsString, MinLength } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsJWT, IsString, MinLength } from 'class-validator';
 
-export class AuthResetDTO{
-    @ApiProperty()
-    @IsString()
-    @MinLength(6)
-    password:string
+export class AuthResetDTO {
+  @ApiProperty({ type: String })
+  @IsString()
+  @MinLength(6)
+  password: string;
 
-    @ApiProperty()
-    @IsJWT()
-    token:string
+  @ApiProperty({ type: String })
+  @IsJWT()
+  token: string;
 }

@@ -1,4 +1,4 @@
-import { IsString, IsDefined, IsIn, IsDate } from "class-validator";
+import { IsString, IsDefined, IsOptional, IsIn, IsDate } from "class-validator";
 import { AssociateUserWarehouse } from "./";
 import { getEnumValues } from "../helpers";
 import { Role, StatusAccount } from "../enums";
@@ -15,6 +15,22 @@ export class User {
     @IsDefined()
     @IsString()
     password!: string;
+
+    @IsDefined()
+    @IsString()
+    name!: string;
+
+    @IsDefined()
+    @IsString()
+    department!: string;
+
+    @IsDefined()
+    @IsString()
+    jobTitle!: string;
+
+    @IsOptional()
+    @IsString()
+    profileImage?: string;
 
     @IsDefined()
     @IsIn(getEnumValues(Role))
