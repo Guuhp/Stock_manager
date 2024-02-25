@@ -1,40 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, MaxLength, Min, MinLength } from 'class-validator';
-import { Warehouse } from '../entities/warehouse.entity';
+import { IsNumber, IsNumberString, IsString } from "class-validator";
+import { User } from "src/modules/users/entities/user.entity";
 
-export class CreateWarehouseDto extends Warehouse {
-    @ApiProperty({ type: String })
-    @IsNotEmpty()
-    @MinLength(3)
-    @MaxLength(70)
+export class CreateWarehouseDto extends User{
+    @IsString()
     name: string;
   
-    @ApiProperty({ type: String })
-    @IsEmail()
-    @IsNotEmpty()
-    email: string;
-  
-    @ApiProperty({ type: Number })
+    @IsNumber()
     code: number;
   
-    @ApiProperty({ type: String })
-    @IsNotEmpty()
+    @IsString()
     telephone: string;
-  
-    @ApiProperty({ type: Number })
-    @Min(0)
-    totalItems: number;
-  
-    @ApiProperty({ type: Number })
-    @Min(0)
-    currentInventoryValue: number;
-  
-    @ApiProperty({ type: Number })
-    @Min(0)
-    minInventoryThreshold: number;
-  
-    @ApiProperty({ type: Number })
-    maxInventoryThreshold: number;
 }
-
-

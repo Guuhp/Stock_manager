@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { WarehouseService } from './warehouse.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
+import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/role.decorator';

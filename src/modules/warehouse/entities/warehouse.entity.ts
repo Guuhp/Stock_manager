@@ -6,10 +6,6 @@ export class Warehouse {
   name: string;
   code: number;
   telephone: string;
-  totalItems: number; //total de itens
-  currentInventoryValue: number; // valor de inventario
-  minInventoryThreshold: number; // Aciona alertas para estoque baixo
-  maxInventoryThreshold: number; // Evita excesso de estoque
   users: User[];
   products: Product[];
 
