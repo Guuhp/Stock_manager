@@ -10,20 +10,48 @@ import {
 export class WarehouseService {
   constructor(private readonly prisma: PrismaService) {}
 
+  generateUniqueCode(): number {
+    const randomNumber = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
+
+    const codeString = randomNumber.toString();
+
+    return parseInt(codeString.substring(0, Math.min(codeString.length, 6)));
+  }
+
   async create(data: CreateWarehouseDto) {
-    const existsWarehouse = await this.prisma.warehouse.findUnique({
-      where: { code: data.code },
-    });
-    if (existsWarehouse) {
+    //    let code = this.generateUniqueCode();
+    let code = 895576;
+
+    console.log(`ANTES: ${code}`);
+    while (true) {
+      const existsWarehouse = await this.prisma.warehouse.findUnique({
+        where: { code },
+      });
+      if (!existsWarehouse) {
+        break;
+      }
+      code = this.generateUniqueCode();
+    }
+
+    const [existsEmail, existsTelephone] = await Promise.all([
+      await this.prisma.warehouse.findFirst({ where: { email: data.email } }),
+      await this.prisma.warehouse.findFirst({
+        where: { telephone: data.telephone },
+      }),
+    ]);
+
+    if (existsEmail || existsTelephone) {
       throw new CustomHttpException(
-        HttpStatus.BAD_REQUEST,
-        'existing warehouse',
+        HttpStatus.CONFLICT,
+        'Email or telephone already exists',
       );
     }
-    console.log(data);
+
+    data.code = code;
     const warehouse = await this.prisma.warehouse.create({
       data,
     });
+
     return warehouse;
   }
 
