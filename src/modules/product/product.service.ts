@@ -10,7 +10,7 @@ export class ProductService {
     const users = await this.prisma.product.findMany({
       include: {
         category: true,
-        warehouses: true,
+        //warehouses: true,
         //ProductSupplier: true,
         //AssociateWarehouseProduct: true
       },
