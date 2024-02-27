@@ -12,9 +12,7 @@ export class WarehouseService {
 
   generateUniqueCode(): number {
     const randomNumber = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
-
     const codeString = randomNumber.toString();
-
     return parseInt(codeString.substring(0, Math.min(codeString.length, 6)));
   }
 

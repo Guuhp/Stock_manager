@@ -34,7 +34,6 @@ export class RoleGuard implements CanActivate {
       const user = await this.userService.findOne(data.id)      
   
       const hasRequiredRole = requiredRole.filter((role) => role === user.role);
-      console.log(hasRequiredRole.length > 0);
       return hasRequiredRole.length > 0;
     } catch {
       new UnauthorizedException("Check your permissions")

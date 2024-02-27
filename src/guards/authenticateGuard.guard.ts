@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
-import { ForbiddenException } from 'src/exceptions/expection';
+import { ForbiddenException, UnauthorizedException } from 'src/exceptions/expection';
 import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class authenticateGuard implements CanActivate {
       request.user = await this.userService.findOne(data.id);
       return true;
     } catch {
-      new ForbiddenException("Forbidden resource")
+      new UnauthorizedException("check your permission")
     }
   }
 }
