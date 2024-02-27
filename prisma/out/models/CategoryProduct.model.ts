@@ -12,7 +12,7 @@ export class CategoryProduct {
 
     @IsDefined()
     @IsString()
-    description!: string;
+    slug!: string;
 
     @IsDefined()
     @IsDate()

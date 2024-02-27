@@ -1,4 +1,4 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
+import { IsString, IsDefined, IsOptional, IsInt, IsDate } from "class-validator";
 import { Warehouse, CategoryProduct, AssociateProductSupplier, AssociateWarehouseProduct } from "./";
 
 export class Product {
@@ -14,12 +14,47 @@ export class Product {
     @IsString()
     unit_of_measurement!: string;
 
-    @IsDefined()
+    @IsOptional()
     @IsString()
-    description!: string;
+    description?: string;
 
     @IsDefined()
     price!: number;
+
+    @IsDefined()
+    weight!: number;
+
+    @IsDefined()
+    @IsString()
+    dimensions!: string;
+
+    @IsDefined()
+    @IsString()
+    brand!: string;
+
+    @IsOptional()
+    @IsString()
+    sku?: string;
+
+    @IsOptional()
+    @IsString()
+    barCode?: string;
+
+    @IsDefined()
+    @IsInt()
+    currentStockQuantity!: number;
+
+    @IsDefined()
+    @IsInt()
+    minimumStockLevel!: number;
+
+    @IsDefined()
+    @IsInt()
+    reorderQuantity!: number;
+
+    @IsOptional()
+    @IsString()
+    imageUrl?: string;
 
     @IsDefined()
     warehouses!: Warehouse[];

@@ -1,4 +1,4 @@
-import { IsString, IsDefined, IsInt, IsDate } from "class-validator";
+import { IsString, IsDefined, IsInt, IsOptional, IsBoolean, IsDate } from "class-validator";
 import { AssociateProductSupplier } from "./";
 
 export class Supplier {
@@ -19,12 +19,16 @@ export class Supplier {
     telephone!: string;
 
     @IsDefined()
-    @IsString()
-    address!: string;
-
-    @IsDefined()
     @IsInt()
     cnpj!: number;
+
+    @IsOptional()
+    @IsString()
+    minimum_order_quantity?: string;
+
+    @IsDefined()
+    @IsBoolean()
+    is_active!: boolean;
 
     @IsDefined()
     @IsDate()

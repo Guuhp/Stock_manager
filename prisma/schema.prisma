@@ -23,10 +23,10 @@ generator class_validator {
   output   = "./out"
 }
 
-generator prismaClassGenerator {
-  provider = "prisma-class-generator"
-  //output   = "./swagger-class"
-}
+//generator prismaClassGenerator {
+//  provider = "prisma-class-generator"
+//  output   = "./swagger-class"
+//}
 
 enum StatusWarehouse {
   EMPTY
@@ -69,12 +69,12 @@ model User {
 model Warehouse {
   id String @id @default(uuid())
 
-  name                  String
-  email String @unique
-  code                  Int    @unique 
-  telephone             String @unique
+  name      String
+  email     String @unique
+  code      Int    @unique
+  telephone String @unique
 
-  totalItems Int //total de itens
+  totalItems            Int //total de itens
   currentInventoryValue Float // valor de inventario
   minInventoryThreshold Int // Aciona alertas para estoque baixo
   maxInventoryThreshold Int // Evita excesso de estoque
@@ -108,8 +108,18 @@ model Product {
 
   name                String
   unit_of_measurement String
-  description         String
+  description         String?
   price               Float
+  weight              Float
+  dimensions          String
+
+  brand                String
+  sku                  String?
+  barCode              String?
+  currentStockQuantity Int //(rastreia o estoque disponível atual)
+  minimumStockLevel    Int //(aciona alertas de estoque baixo)
+  reorderQuantity      Int // (quantidade predefinida para pedir quando o estoque estiver baixo)
+  imageUrl             String?
 
   warehouses Warehouse[]
 
@@ -140,8 +150,9 @@ model Supplier {
   name      String
   email     String @unique
   telephone String
-  address   String
   cnpj      Int    @unique
+  minimum_order_quantity String?
+  is_active Boolean @default(true)
 
   created_at      DateTime                   @default(now())
   updated_at      DateTime                   @updatedAt
@@ -166,7 +177,7 @@ model CategoryProduct {
   id String @id @default(uuid())
 
   name        String
-  description String
+  slug String
 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
