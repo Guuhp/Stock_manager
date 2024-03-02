@@ -44,6 +44,7 @@ enum StatusAccount {
   INATIVE
 }
 
+
 model User {
   id String @id @default(uuid())
 
@@ -147,12 +148,11 @@ model AssociateWarehouseProduct {
 model Supplier {
   id String @id @default(uuid())
 
-  name      String
-  email     String @unique
-  telephone String
-  cnpj      Int    @unique
-  minimum_order_quantity String?
-  is_active Boolean @default(true)
+  name                   String
+  email                  String  @unique
+  telephone              String
+  cnpj                   String     @unique 
+  is_active              Boolean? @default(true)
 
   created_at      DateTime                   @default(now())
   updated_at      DateTime                   @updatedAt
@@ -176,7 +176,7 @@ model AssociateProductSupplier {
 model CategoryProduct {
   id String @id @default(uuid())
 
-  name        String
+  name String
   slug String
 
   created_at DateTime  @default(now())
