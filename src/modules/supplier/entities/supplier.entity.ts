@@ -3,7 +3,8 @@ export class Supplier {
   name: string;
   email: string;
   telephone: string;
-  cnpj: number;
+  cnpj: string;
+  is_active?: boolean;
   created_at?: string;
   updated_at?: string;
 }

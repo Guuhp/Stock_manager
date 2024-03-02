@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { SupplierService } from './supplier.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 
@@ -14,5 +14,11 @@ export class SupplierController {
   @Get()
   findAll() {
     return this.supplierService.findAll();
+  }
+
+  @Get(':param')
+  findSupplier(@Param('param') param: string) {
+    console.log(param)
+    return this.supplierService.findSupplier(param); 
   }
 }
