@@ -14,6 +14,7 @@ import {
 } from 'src/exceptions/expection';
 import { Role } from 'src/enums/role.enum';
 import { StatusAccount } from 'src/enums/statusAccount.enum';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -59,12 +60,16 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, data) {
-    const user = this.prisma.user.update({
-      where: { id: id },
+  async update(id: string, data: UpdateUserDto) {
+    const existsUser = await this.prisma.user.findFirst({ where: { id } });
+
+    if (!existsUser) throw new NotFoundException('user');
+
+    const userUpdate = await this.prisma.user.update({
+      where: { id },
       data,
     });
-    return user;
+    return userUpdate;
   }
 
   async changeUserRole(userId: string, newRole: Role) {
