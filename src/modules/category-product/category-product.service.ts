@@ -42,8 +42,7 @@ export class CategoryProductService {
       where: { id },
     });
 
-    if (!existsCategory)
-      throw new NotFoundException('Category not found');
+    if (!existsCategory) throw new NotFoundException('Category not found');
 
     const updateCategoryProduct = await this.prisma.categoryProduct.update({
       where: { id },
@@ -63,5 +62,16 @@ export class CategoryProductService {
       where: { id },
     });
     return { success: true, message: 'category successfully deleted' };
+  }
+
+  async listProductsByCategory(id: string) {
+    const existsProductInCategory = await this.prisma.categoryProduct.findFirst(
+      { where: { id }, include: { Products: true } },
+    );
+
+    if (!existsProductInCategory)
+      throw new NotFoundException('Category not found');
+
+    return existsProductInCategory.Products;
   }
 }
