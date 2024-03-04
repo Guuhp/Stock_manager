@@ -115,8 +115,8 @@ model Product {
   dimensions          String
 
   brand                String
-  sku                  String?
-  barCode              String?
+  sku                  String? @unique
+  barCode              String? @unique
   currentStockQuantity Int //(rastreia o estoque disponível atual)
   minimumStockLevel    Int //(aciona alertas de estoque baixo)
   reorderQuantity      Int // (quantidade predefinida para pedir quando o estoque estiver baixo)
@@ -185,3 +185,4 @@ model CategoryProduct {
 
   @@map("category_products")
 }
+
