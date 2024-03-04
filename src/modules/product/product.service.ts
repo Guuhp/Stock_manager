@@ -28,14 +28,8 @@ export class ProductService {
   }
 
   async findAll() {
-    const users = await this.prisma.product.findMany({
-      //     include: {
-      //       category: true,
-      //       warehouses: true,
-      //       ProductSupplier: true,
-      //       AssociateWarehouseProduct: true,
-      //     },
-    });
+    const users = await this.prisma.product.findMany({});
+    if (users.length === 0) throw new NotFoundException('products');
     return users;
   }
 
@@ -52,8 +46,8 @@ export class ProductService {
   }
 
   async create(data: CreateProductDto) {
-    let code = this.warehouseService.generateUniqueCode();
-    let sku = this.generateSku(data.name, code, data.brand);
+    let ni = this.warehouseService.generateUniqueCode();
+    let sku = this.generateSku(data.name, ni, data.brand);
     let barCode = this.generateBarCode();
 
     while (true) {
@@ -69,20 +63,21 @@ export class ProductService {
       if (!existsSku && !existsBarCode) {
         break;
       }
-      code = this.warehouseService.generateUniqueCode();
-      sku = this.generateSku(data.name, code, data.brand);
+      ni = this.warehouseService.generateUniqueCode();
+      sku = this.generateSku(data.name, ni, data.brand);
       barCode = this.generateBarCode();
     }
 
-    const product = await this.prisma.product.create({
-      data: {
-        ...data,
-        sku,
-        barCode,
-      },
-    });
-
-    return product;
+        const product = await this.prisma.product.create({
+          data: {
+            ...data,
+            sku,
+            barCode,
+            ni
+          },
+        });
+    
+        return product;
   }
 
   //GERAR O QRCODE
