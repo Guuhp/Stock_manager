@@ -5,6 +5,7 @@ import {
   CustomHttpException,
   NotFoundException,
 } from 'src/exceptions/expection';
+import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 
 @Injectable()
 export class WarehouseService {
@@ -18,7 +19,7 @@ export class WarehouseService {
 
   async create(data: CreateWarehouseDto) {
     let code = this.generateUniqueCode();
-    
+
     console.log(`ANTES: ${code}`);
     while (true) {
       const existsWarehouse = await this.prisma.warehouse.findUnique({
@@ -62,4 +63,17 @@ export class WarehouseService {
     }
     return warehouses;
   }
+
+  //async update(data:UpdateWarehouseDto){}
+  //async receiveProduct(produto: Produto, quantidade: number){}
+  //gerarPickingList(pedido: Pedido){}
+  //confirmarPicking(pickingList: PickingList):
+  //obterQuantidadeEstoque(produto: Produto):
+  //armazenarProduto(produto: Produto, localizacao: Localizacao):
+  //obterLocalizacaoProduto(produto: Produto):
+  //listarLocaisDisponiveis():
+  //registrarMovimentacao(produto: Produto, quantidade: number, tipoMovimentacao: TipoMovimentacao):
+  //obterHistoricoMovimentacao(produto: Produto): Movimentacao[]
+  //gerarRelatorioEstoque(): 
+  //gerarRelatorioMovimentacao(periodo: Periodo): 
 }

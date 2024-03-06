@@ -44,7 +44,6 @@ enum StatusAccount {
   INATIVE
 }
 
-
 model User {
   id String @id @default(uuid())
 
@@ -117,6 +116,7 @@ model Product {
   brand                String
   sku                  String? @unique
   barCode              String? @unique
+  ni                   Int     @unique
   currentStockQuantity Int //(rastreia o estoque disponível atual)
   minimumStockLevel    Int //(aciona alertas de estoque baixo)
   reorderQuantity      Int // (quantidade predefinida para pedir quando o estoque estiver baixo)
@@ -148,11 +148,11 @@ model AssociateWarehouseProduct {
 model Supplier {
   id String @id @default(uuid())
 
-  name                   String
-  email                  String  @unique
-  telephone              String
-  cnpj                   String     @unique 
-  is_active              Boolean? @default(true)
+  name      String
+  email     String   @unique
+  telephone String
+  cnpj      String   @unique
+  is_active Boolean? @default(true)
 
   created_at      DateTime                   @default(now())
   updated_at      DateTime                   @updatedAt
@@ -185,4 +185,3 @@ model CategoryProduct {
 
   @@map("category_products")
 }
-

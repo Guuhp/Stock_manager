@@ -82,4 +82,8 @@ export class SupplierService {
 
     return { status: 200, message: 'Supplier deleted successfully' };
   }
+
+  //solicitarCompra(pedido: PedidoCompra): void** - Realizar uma solicitação de compra para um fornecedor.
+  //obterPedidosCompra(fornecedor: string): PedidoCompra[]** - Obter a lista de pedidos de compra para um fornecedor.
+  //confirmarCompra(pedido: PedidoCompra): void** - Confirmar o recebimento de uma compra.
 }

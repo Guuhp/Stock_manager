@@ -42,6 +42,10 @@ export class Product {
 
     @IsDefined()
     @IsInt()
+    ni!: number;
+
+    @IsDefined()
+    @IsInt()
     currentStockQuantity!: number;
 
     @IsDefined()

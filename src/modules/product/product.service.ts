@@ -68,18 +68,28 @@ export class ProductService {
       barCode = this.generateBarCode();
     }
 
-        const product = await this.prisma.product.create({
-          data: {
-            ...data,
-            sku,
-            barCode,
-            ni
-          },
-        });
-    
-        return product;
+    const product = await this.prisma.product.create({
+      data: {
+        ...data,
+        sku,
+        barCode,
+        ni,
+      },
+    });
+
+    return product;
   }
 
   //GERAR O QRCODE
   //SCANEAR O QRCODE
+
+  //async remove(id: string) {}
+  //obterEstoque(id: string): Estoque - Obter a quantidade disponível de um produto em estoque.
+  //reservarEstoque(id: string, quantidade: number): void 
+  //liberarEstoque(id: string, quantidade: number): void
+  //adicionarImagem(imagem: Imagem): void - Adicionar uma nova imagem a um produto.
+  //obterPreco(id: string): Preco** - Obter o preço atual de um produto.
+  //atualizarPreco(id: string, preco: number): void** - Atualizar o preço de um produto.
+  //obterCategoria(id: string): Categoria** - Obter a categoria de um produto.
+  //alterarCategoria(id: string, categoria: Categoria): void** - Alterar a categoria de um produto.
 }
