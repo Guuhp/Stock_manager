@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import {
@@ -7,10 +7,15 @@ import {
 } from 'src/exceptions/expection';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { ProductService } from '../product/product.service';
+import { ReceivedProductDto } from './dto/receiveProduct.dto';
 
 @Injectable()
 export class WarehouseService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    @Inject(forwardRef(() => ProductService))
+    private productService: ProductService,
+  ) {}
 
   generateUniqueCode(): number {
     const randomNumber = Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000;
@@ -79,9 +84,20 @@ export class WarehouseService {
     return WarehouseUpdate;
   }
 
-  async receiveProduct(
-    param: string /*produto: Produto, quantidade: number*/,
-  ) {}
+  async receiveProduct(data: ReceivedProductDto) {
+    const existsProduct = await this.productService.findProductForNi(
+      data.niProduct,
+    );
+
+    existsProduct.currentStockQuantity += data.amount;
+
+    const updatedProduct = await this.productService.update(
+      existsProduct.id,
+      existsProduct,
+    );
+    //ORGANIZAR PARA AJUSTAR OS OUTROS PARAMETROS
+    return updatedProduct;
+  }
 
   //gerarPickingList(pedido: Pedido){}
   //confirmarPicking(pickingList: PickingList):

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -9,6 +9,7 @@ import { WarehouseService } from '../warehouse/warehouse.service';
 export class ProductService {
   constructor(
     private readonly prisma: PrismaService,
+    @Inject(forwardRef(() => WarehouseService))
     private readonly warehouseService: WarehouseService,
   ) {}
 

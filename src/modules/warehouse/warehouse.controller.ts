@@ -15,9 +15,10 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/enums/role.enum';
 import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
+import { ReceivedProductDto } from './dto/receiveProduct.dto';
 
 @ApiTags('warehouse')
-@UseGuards(authenticateGuard, RoleGuard)
+//@UseGuards(authenticateGuard, RoleGuard)
 @Controller('warehouse')
 export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}
@@ -27,7 +28,6 @@ export class WarehouseController {
     return this.warehouseService.findAll();
   }
 
-  @Roles(Role.ADMIN)
   @Post()
   create(@Body() createWarehouseDto: CreateWarehouseDto) {
     return this.warehouseService.create(createWarehouseDto);
@@ -42,7 +42,7 @@ export class WarehouseController {
   }
 
   @Post('receive')
-  receiveProduct(@Body() param: string){
-    return this.warehouseService.receiveProduct(param);
+  receiveProduct(@Body() data: ReceivedProductDto){
+    return this.warehouseService.receiveProduct(data);
   }
 }
