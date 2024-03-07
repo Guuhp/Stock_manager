@@ -33,4 +33,11 @@ export class WarehouseController {
     return this.warehouseService.create(createWarehouseDto);
   }
 
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateWarehouseDto: UpdateWarehouseDto,
+  ) {
+    return this.warehouseService.update(id, updateWarehouseDto);
+  }
 }

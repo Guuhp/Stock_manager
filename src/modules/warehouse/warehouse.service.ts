@@ -64,7 +64,18 @@ export class WarehouseService {
     return warehouses;
   }
 
-  //async update(data:UpdateWarehouseDto){}
+  async update(id: string, data:UpdateWarehouseDto){
+    const existsWarehouse = await this.prisma.warehouse.findFirst({ where: { id } });
+
+    if (!existsWarehouse) throw new NotFoundException('Warehouse');
+
+    const WarehouseUpdate = await this.prisma.warehouse.update({
+      where: { id },
+      data,
+    });
+    return WarehouseUpdate;
+  }
+
   //async receiveProduct(produto: Produto, quantidade: number){}
   //gerarPickingList(pedido: Pedido){}
   //confirmarPicking(pickingList: PickingList):
