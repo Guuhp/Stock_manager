@@ -32,7 +32,7 @@ export class AuthService {
           id: user?.id,
         },
         {
-          expiresIn: '7 days',
+          expiresIn: '30 days',
           issuer: 'API NESTJS',
           audience: 'users',
         },
