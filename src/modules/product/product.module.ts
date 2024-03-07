@@ -8,5 +8,6 @@ import { WarehouseModule } from '../warehouse/warehouse.module';
   imports: [PrismaModule, WarehouseModule],
   controllers: [ProductController],
   providers: [ProductService],
+  exports: [ProductService],
 })
 export class ProductModule {}

@@ -40,4 +40,9 @@ export class WarehouseController {
   ) {
     return this.warehouseService.update(id, updateWarehouseDto);
   }
+
+  @Post('receive')
+  receiveProduct(@Body() param: string){
+    return this.warehouseService.receiveProduct(param);
+  }
 }

@@ -47,7 +47,7 @@ export class ProductService {
 
   async create(data: CreateProductDto) {
     let ni = this.warehouseService.generateUniqueCode();
-    let sku = this.generateSku(data.name, ni, data.brand);
+    let sku = this.generateSku(data.name, ni, data.brand).toUpperCase();
     let barCode = this.generateBarCode();
 
     while (true) {
@@ -64,7 +64,7 @@ export class ProductService {
         break;
       }
       ni = this.warehouseService.generateUniqueCode();
-      sku = this.generateSku(data.name, ni, data.brand);
+      sku = this.generateSku(data.name, ni, data.brand).toUpperCase();
       barCode = this.generateBarCode();
     }
 
@@ -80,12 +80,22 @@ export class ProductService {
     return product;
   }
 
+  async findProductForNi(param: number) {
+    const existsProduct = await this.prisma.product.findFirst({
+      where: {
+        ni: Number(param),
+      },
+    });
+    if (!existsProduct) throw new NotFoundException('product');
+    return existsProduct;
+  }
+
   //GERAR O QRCODE
   //SCANEAR O QRCODE
 
   //async remove(id: string) {}
   //obterEstoque(id: string): Estoque - Obter a quantidade disponível de um produto em estoque.
-  //reservarEstoque(id: string, quantidade: number): void 
+  //reservarEstoque(id: string, quantidade: number): void
   //liberarEstoque(id: string, quantidade: number): void
   //adicionarImagem(imagem: Imagem): void - Adicionar uma nova imagem a um produto.
   //obterPreco(id: string): Preco** - Obter o preço atual de um produto.

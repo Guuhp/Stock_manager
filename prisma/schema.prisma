@@ -10,9 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//generator erd {
-//  provider = "prisma-erd-generator"
-//}
+generator erd {
+  provider = "prisma-erd-generator"
+}
 
 //generator dbml {
 //  provider = "prisma-dbml-generator"
@@ -42,6 +42,12 @@ enum Role {
 enum StatusAccount {
   ACTIVE
   INATIVE
+}
+
+enum TypeInvoice {
+  NULL
+  INPUT
+  OUTPUT
 }
 
 model User {

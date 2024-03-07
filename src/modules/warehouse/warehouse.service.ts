@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from 'src/exceptions/expection';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class WarehouseService {
@@ -64,8 +65,10 @@ export class WarehouseService {
     return warehouses;
   }
 
-  async update(id: string, data:UpdateWarehouseDto){
-    const existsWarehouse = await this.prisma.warehouse.findFirst({ where: { id } });
+  async update(id: string, data: UpdateWarehouseDto) {
+    const existsWarehouse = await this.prisma.warehouse.findFirst({
+      where: { id },
+    });
 
     if (!existsWarehouse) throw new NotFoundException('Warehouse');
 
@@ -76,7 +79,10 @@ export class WarehouseService {
     return WarehouseUpdate;
   }
 
-  //async receiveProduct(produto: Produto, quantidade: number){}
+  async receiveProduct(
+    param: string /*produto: Produto, quantidade: number*/,
+  ) {}
+
   //gerarPickingList(pedido: Pedido){}
   //confirmarPicking(pickingList: PickingList):
   //obterQuantidadeEstoque(produto: Produto):
@@ -85,6 +91,6 @@ export class WarehouseService {
   //listarLocaisDisponiveis():
   //registrarMovimentacao(produto: Produto, quantidade: number, tipoMovimentacao: TipoMovimentacao):
   //obterHistoricoMovimentacao(produto: Produto): Movimentacao[]
-  //gerarRelatorioEstoque(): 
-  //gerarRelatorioMovimentacao(periodo: Periodo): 
+  //gerarRelatorioEstoque():
+  //gerarRelatorioMovimentacao(periodo: Periodo):
 }
