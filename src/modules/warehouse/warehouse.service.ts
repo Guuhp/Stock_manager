@@ -62,7 +62,6 @@ export class WarehouseService {
     const warehouses = await this.prisma.warehouse.findMany({
       include: { usersWarehouse: true },
     });
-    console.log(warehouses);
 
     if (warehouses.length == 0) {
       throw new NotFoundException('warehouse');
@@ -99,11 +98,19 @@ export class WarehouseService {
     return updatedProduct;
   }
 
+  async getStockQuantity(){
+    let sumQuantity = 0;
+    const products = await this.prisma.product.findMany()
+    products.forEach(product => {
+      sumQuantity += product.currentStockQuantity
+    })
+    return {'stockQuantity': sumQuantity}
+  }
+
   //gerarPickingList(pedido: Pedido){}
   //confirmarPicking(pickingList: PickingList):
-  //obterQuantidadeEstoque(produto: Produto):
   //armazenarProduto(produto: Produto, localizacao: Localizacao):
-  //obterLocalizacaoProduto(produto: Produto):
+  //obterLocalizacaoProduto(poduto: Produto):
   //listarLocaisDisponiveis():
   //registrarMovimentacao(produto: Produto, quantidade: number, tipoMovimentacao: TipoMovimentacao):
   //obterHistoricoMovimentacao(produto: Produto): Movimentacao[]

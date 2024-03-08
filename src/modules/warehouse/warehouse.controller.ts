@@ -45,4 +45,9 @@ export class WarehouseController {
   receiveProduct(@Body() data: ReceivedProductDto){
     return this.warehouseService.receiveProduct(data);
   }
+  
+  @Get('get_stock_quantity')
+  getStockQuantity(){
+    return this.warehouseService.getStockQuantity();
+  }
 }
