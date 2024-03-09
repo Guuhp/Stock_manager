@@ -8,6 +8,7 @@ import {
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { ProductService } from '../product/product.service';
 import { ReceivedProductDto } from './dto/receiveProduct.dto';
+import { InvoiceService } from '../invoice/invoice.service';
 
 @Injectable()
 export class WarehouseService {
@@ -15,6 +16,7 @@ export class WarehouseService {
     private readonly prisma: PrismaService,
     @Inject(forwardRef(() => ProductService))
     private productService: ProductService,
+    private readonly invoiceService: InvoiceService
   ) {}
 
   generateUniqueCode(): number {
