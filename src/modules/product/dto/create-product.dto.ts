@@ -49,6 +49,11 @@ export class CreateProductDto {
   @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsString()
+  address:string
+
+  @ApiPropertyOptional({ type: String })
+  @IsOptional()
+  @IsString()
   barCode?: string;
 
   @ApiProperty({ type: Number })

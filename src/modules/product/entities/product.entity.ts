@@ -15,6 +15,7 @@ export class Product {
   sku?: string;
   barCode?: string;
   ni:number;
+  address?:string;
   currentStockQuantity: number;
   minimumStockLevel: number;
   reorderQuantity: number;

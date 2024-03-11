@@ -10,9 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-}
+//generator erd {
+//  provider = "prisma-erd-generator"
+//}
 
 //generator dbml {
 //  provider = "prisma-dbml-generator"
@@ -45,7 +45,6 @@ enum StatusAccount {
 }
 
 enum TypeInvoice {
-  NULL
   INPUT
   OUTPUT
 }
@@ -70,6 +69,30 @@ model User {
   updated_at DateTime @updatedAt
 
   @@map("users")
+}
+
+model Invoice {
+  id       String            @id @default(uuid())
+  userId   String
+  products ProductQuantity[]
+  total    Float
+  type     TypeInvoice
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("invoices")
+}
+
+model ProductQuantity {
+  id        String   @id @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  Invoice   Invoice? @relation(fields: [invoiceId], references: [id])
+  invoiceId String?
+
+  @@map("product_quantities")
 }
 
 model Warehouse {
@@ -123,6 +146,7 @@ model Product {
   sku                  String? @unique
   barCode              String? @unique
   ni                   Int     @unique
+  address            String  @unique
   currentStockQuantity Int //(rastreia o estoque disponível atual)
   minimumStockLevel    Int //(aciona alertas de estoque baixo)
   reorderQuantity      Int // (quantidade predefinida para pedir quando o estoque estiver baixo)
@@ -138,6 +162,7 @@ model Product {
   created_at                DateTime                    @default(now())
   updated_at                DateTime                    @updatedAt
   AssociateWarehouseProduct AssociateWarehouseProduct[]
+  ProductQuantity           ProductQuantity[]
 
   @@map("products")
 }
