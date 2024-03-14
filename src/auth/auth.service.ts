@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import {  User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { UsersService } from 'src/modules/users/users.service';
 import { SendEmailService } from 'src/modules/send-email/send-email.service';
@@ -99,7 +99,7 @@ export class AuthService {
         },
       ),
     };
-    console.log("TOKEN:"+token.acessToken);
+    console.log('TOKEN:' + token.acessToken);
 
     await this.email.sendEmailResetPassword(user.email, token.acessToken);
     return true;

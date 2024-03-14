@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//generator erd {
-//  provider = "prisma-erd-generator"
-//}
+generator erd {
+  provider = "prisma-erd-generator"
+}
 
-//generator dbml {
-//  provider = "prisma-dbml-generator"
-//}
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
 
 generator class_validator {
   provider = "prisma-class-validator-generator"
@@ -49,6 +49,11 @@ enum TypeInvoice {
   OUTPUT
 }
 
+enum StatusAddress {
+  AVAILABLE
+  NOTAVAILABLE
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -71,12 +76,23 @@ model User {
   @@map("users")
 }
 
+model AddressWarehouse {
+  id            String        @id @default(uuid())
+  address       String        @unique
+  statusAddress StatusAddress @default(NOTAVAILABLE)
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @unique
+
+  Warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  warehouseId String
+}
+
 model Invoice {
-  id       String            @id @default(uuid())
-  userId   String
-  products ProductQuantity[]
-  total    Float
-  type     TypeInvoice
+  id         String            @id @default(uuid())
+  products   ProductQuantity[]
+  totalItens Float?
+  type       TypeInvoice
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -107,6 +123,7 @@ model Warehouse {
   currentInventoryValue Float // valor de inventario
   minInventoryThreshold Int // Aciona alertas para estoque baixo
   maxInventoryThreshold Int // Evita excesso de estoque
+  addressWarehouses     AddressWarehouse[]
 
   usersWarehouse AssociateUserWarehouse[]
 
@@ -146,7 +163,7 @@ model Product {
   sku                  String? @unique
   barCode              String? @unique
   ni                   Int     @unique
-  address            String  @unique
+  address              String? @unique
   currentStockQuantity Int //(rastreia o estoque disponível atual)
   minimumStockLevel    Int //(aciona alertas de estoque baixo)
   reorderQuantity      Int // (quantidade predefinida para pedir quando o estoque estiver baixo)
@@ -163,6 +180,7 @@ model Product {
   updated_at                DateTime                    @updatedAt
   AssociateWarehouseProduct AssociateWarehouseProduct[]
   ProductQuantity           ProductQuantity[]
+  AddressWarehouse          AddressWarehouse?
 
   @@map("products")
 }

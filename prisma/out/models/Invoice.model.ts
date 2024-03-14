@@ -1,4 +1,4 @@
-import { IsString, IsDefined, IsIn, IsDate } from "class-validator";
+import { IsString, IsDefined, IsOptional, IsIn, IsDate } from "class-validator";
 import { ProductQuantity } from "./";
 import { getEnumValues } from "../helpers";
 import { TypeInvoice } from "../enums";
@@ -9,14 +9,10 @@ export class Invoice {
     id!: string;
 
     @IsDefined()
-    @IsString()
-    userId!: string;
-
-    @IsDefined()
     products!: ProductQuantity[];
 
-    @IsDefined()
-    total!: number;
+    @IsOptional()
+    totalItens?: number;
 
     @IsDefined()
     @IsIn(getEnumValues(TypeInvoice))

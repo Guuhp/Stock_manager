@@ -17,13 +17,32 @@ Table users {
   updated_at DateTime [not null]
 }
 
-Table Invoice {
+Table AddressWarehouse {
   id String [pk]
-  warehouse warehouses [not null]
-  codProduct String [not null]
-  amount Int [not null]
-  typeInvoice TypeInvoice [not null]
+  address String [unique, not null]
+  statusAddress StatusAddress [not null, default: 'NOTAVAILABLE']
+  product products
+  productId String [unique]
+  Warehouse warehouses [not null]
   warehouseId String [not null]
+}
+
+Table invoices {
+  id String [pk]
+  products product_quantities [not null]
+  totalItens Float
+  type TypeInvoice [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table product_quantities {
+  id String [pk]
+  product products [not null]
+  productId String [not null]
+  quantity Int [not null]
+  Invoice invoices
+  invoiceId String
 }
 
 Table warehouses {
@@ -36,13 +55,13 @@ Table warehouses {
   currentInventoryValue Float [not null]
   minInventoryThreshold Int [not null]
   maxInventoryThreshold Int [not null]
+  addressWarehouses AddressWarehouse [not null]
   usersWarehouse associate_user_wharehouse [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
   Product products
   productId String
   AssociateWarehouseProduct AssociateWarehouseProduct [not null]
-  Invoice Invoice [not null]
 }
 
 Table associate_user_wharehouse {
@@ -65,6 +84,7 @@ Table products {
   sku String [unique]
   barCode String [unique]
   ni Int [unique, not null]
+  address String [unique]
   currentStockQuantity Int [not null]
   minimumStockLevel Int [not null]
   reorderQuantity Int [not null]
@@ -76,6 +96,8 @@ Table products {
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
   AssociateWarehouseProduct AssociateWarehouseProduct [not null]
+  ProductQuantity product_quantities [not null]
+  AddressWarehouse AddressWarehouse
 }
 
 Table AssociateWarehouseProduct {
@@ -132,12 +154,22 @@ Enum StatusAccount {
 }
 
 Enum TypeInvoice {
-  NULL
   INPUT
   OUTPUT
 }
 
-Ref: Invoice.warehouseId > warehouses.id
+Enum StatusAddress {
+  AVAILABLE
+  NOTAVAILABLE
+}
+
+Ref: AddressWarehouse.productId - products.id
+
+Ref: AddressWarehouse.warehouseId > warehouses.id
+
+Ref: product_quantities.productId > products.id
+
+Ref: product_quantities.invoiceId > invoices.id
 
 Ref: warehouses.productId > products.id
 

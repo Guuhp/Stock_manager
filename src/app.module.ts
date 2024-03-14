@@ -11,7 +11,8 @@ import { AssociateWarehouseProductModule } from './modules/associates/associate-
 import { CategoryProductModule } from './modules/category-product/category-product.module';
 import { SupplierModule } from './modules/supplier/supplier.module';
 import { AssociateProductSupplierModule } from './modules/associates/associate-product-supplier/associate-product-supplier.module';
-import { InvoiceModule } from './invoice/invoice.module';
+import { InvoiceModule } from './modules/invoice/invoice.module';
+import { AddressWarehouseModule } from './modules/address-warehouse/address-warehouse.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { InvoiceModule } from './invoice/invoice.module';
     SupplierModule,
     AssociateProductSupplierModule,
     InvoiceModule,
+    AddressWarehouseModule,
     
   ],
 

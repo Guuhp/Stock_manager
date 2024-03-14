@@ -26,7 +26,7 @@ export class InvoiceService {
       const createInvoice = await this.prisma.invoice.create({
         data: {
           type: typeInvoice,
-          total: totalItens,
+          totalItens: totalItens,
         },
       });
 
@@ -44,7 +44,7 @@ export class InvoiceService {
       // Retorna a fatura criada
       return createInvoice;
     } catch (error) {
-      throw new Error(`Erro ao criar fatura: ${error.message}`);
+      throw new Error(`Erro ao criar fatura: ${error}`);
     }
   }
 }

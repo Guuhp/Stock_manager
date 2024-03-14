@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsInt, IsDate, IsOptional } from "class-validator";
-import { AssociateUserWarehouse, Product, AssociateWarehouseProduct } from "./";
+import { AddressWarehouse, AssociateUserWarehouse, Product, AssociateWarehouseProduct } from "./";
 
 export class Warehouse {
     @IsDefined()
@@ -36,6 +36,9 @@ export class Warehouse {
     @IsDefined()
     @IsInt()
     maxInventoryThreshold!: number;
+
+    @IsDefined()
+    addressWarehouses!: AddressWarehouse[];
 
     @IsDefined()
     usersWarehouse!: AssociateUserWarehouse[];

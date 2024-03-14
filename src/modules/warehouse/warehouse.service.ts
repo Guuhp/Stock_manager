@@ -106,12 +106,11 @@ export class WarehouseService {
     })
     return {'stockQuantity': sumQuantity}
   }
-
-  //gerarPickingList(pedido: Pedido){}
-  //confirmarPicking(pickingList: PickingList):
+  
   //armazenarProduto(produto: Produto, localizacao: Localizacao):
   //obterLocalizacaoProduto(poduto: Produto):
   //listarLocaisDisponiveis():
+  
   //registrarMovimentacao(produto: Produto, quantidade: number, tipoMovimentacao: TipoMovimentacao):
   //obterHistoricoMovimentacao(produto: Produto): Movimentacao[]
   //gerarRelatorioEstoque():

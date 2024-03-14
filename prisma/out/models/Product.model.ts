@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsOptional, IsInt, IsDate } from "class-validator";
-import { Warehouse, CategoryProduct, AssociateProductSupplier, AssociateWarehouseProduct, ProductQuantity } from "./";
+import { Warehouse, CategoryProduct, AssociateProductSupplier, AssociateWarehouseProduct, ProductQuantity, AddressWarehouse } from "./";
 
 export class Product {
     @IsDefined()
@@ -44,9 +44,9 @@ export class Product {
     @IsInt()
     ni!: number;
 
-    @IsDefined()
+    @IsOptional()
     @IsString()
-    address!: string;
+    address?: string;
 
     @IsDefined()
     @IsInt()
@@ -90,4 +90,7 @@ export class Product {
 
     @IsDefined()
     ProductQuantity!: ProductQuantity[];
+
+    @IsOptional()
+    AddressWarehouse?: AddressWarehouse;
 }

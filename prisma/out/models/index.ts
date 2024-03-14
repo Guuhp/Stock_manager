@@ -1,3 +1,4 @@
+export { AddressWarehouse } from "./AddressWarehouse.model";
 export { AssociateProductSupplier } from "./AssociateProductSupplier.model";
 export { AssociateUserWarehouse } from "./AssociateUserWarehouse.model";
 export { AssociateWarehouseProduct } from "./AssociateWarehouseProduct.model";

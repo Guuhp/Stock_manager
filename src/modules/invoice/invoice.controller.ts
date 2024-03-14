@@ -26,6 +26,6 @@ export class InvoiceController {
     @Param('typeinvoice') typeinvoice: TypeInvoice,
     @Body() createInvoiceDto: CreateInvoiceDto,
   ) {
-    return this.invoiceService.create(typeinvoice,createInvoiceDto);
+    return this.invoiceService.GenerateInvoice(typeinvoice,createInvoiceDto);
   }
 }
