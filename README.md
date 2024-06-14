@@ -8,3 +8,9 @@ https://www.prisma.io/docs/getting-started
 
 dbml:
 https://dbdiagram.io/d
+
+Funções:
+WAREHOUSE(ARLMOXARIFADO): - SAIDA DE PRODUTOS
+
+    PRODUCTS:
+        - ATUALIZAR
