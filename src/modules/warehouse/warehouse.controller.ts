@@ -18,7 +18,7 @@ import { authenticateGuard } from 'src/guards/authenticateGuard.guard';
 import { ReceivedProductDto } from './dto/receiveProduct.dto';
 
 @ApiTags('warehouse')
-//@UseGuards(authenticateGuard, RoleGuard)
+@UseGuards(authenticateGuard, RoleGuard)
 @Controller('warehouse')
 export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}
@@ -42,12 +42,12 @@ export class WarehouseController {
   }
 
   @Post('receive')
-  receiveProduct(@Body() data: ReceivedProductDto){
+  receiveProduct(@Body() data: ReceivedProductDto) {
     return this.warehouseService.receiveProduct(data);
   }
-  
+
   @Get('get_stock_quantity')
-  getStockQuantity(){
+  getStockQuantity() {
     return this.warehouseService.getStockQuantity();
   }
 }

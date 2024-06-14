@@ -28,15 +28,14 @@ import { AddressWarehouseModule } from './modules/address-warehouse/address-ware
     AssociateProductSupplierModule,
     InvoiceModule,
     AddressWarehouseModule,
-    
   ],
 
   controllers: [],
   providers: [
-      {
-        provide: APP_FILTER,
-        useClass: ExceptionsFilterGlobal,
-      }
+    {
+      provide: APP_FILTER,
+      useClass: ExceptionsFilterGlobal,
+    },
   ],
 })
 export class AppModule {}

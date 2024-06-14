@@ -60,7 +60,7 @@ export class WarehouseService {
   }
   async findAll() {
     const warehouses = await this.prisma.warehouse.findMany({
-      include: { usersWarehouse: true },
+      include: { usersWarehouse: true, AssociateWarehouseProduct: true },
     });
 
     if (warehouses.length == 0) {
@@ -98,19 +98,19 @@ export class WarehouseService {
     return updatedProduct;
   }
 
-  async getStockQuantity(){
+  async getStockQuantity() {
     let sumQuantity = 0;
-    const products = await this.prisma.product.findMany()
-    products.forEach(product => {
-      sumQuantity += product.currentStockQuantity
-    })
-    return {'stockQuantity': sumQuantity}
+    const products = await this.prisma.product.findMany();
+    products.forEach((product) => {
+      sumQuantity += product.currentStockQuantity;
+    });
+    return { stockQuantity: sumQuantity };
   }
-  
+
   //armazenarProduto(produto: Produto, localizacao: Localizacao):
   //obterLocalizacaoProduto(poduto: Produto):
   //listarLocaisDisponiveis():
-  
+
   //registrarMovimentacao(produto: Produto, quantidade: number, tipoMovimentacao: TipoMovimentacao):
   //obterHistoricoMovimentacao(produto: Produto): Movimentacao[]
   //gerarRelatorioEstoque():

@@ -28,12 +28,6 @@ generator class_validator {
 //  output   = "./swagger-class"
 //}
 
-enum StatusWarehouse {
-  EMPTY
-  FULL
-  REPLACEMENT
-}
-
 enum Role {
   USER
   ADMIN
